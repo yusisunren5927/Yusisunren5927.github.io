@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,268 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/ospf%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/15/ospf%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">ospf协议</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 15:43:53 / 修改时间：15:48:46" itemprop="dateCreated datePublished" datetime="2026-05-15T15:43:53+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、OSPF-基础简介"><a href="#一、OSPF-基础简介" class="headerlink" title="一、OSPF 基础简介"></a>一、OSPF 基础简介</h2><p>OSPF 全称：<strong>Open Shortest Path First 开放式最短路径优先协议</strong></p>
+<ol>
+<li>属于 <strong>链路状态型 IGP 内部网关路由协议</strong></li>
+<li>用来替代 RIP：解决 RIP 收敛慢、易环路、扩展性差的问题</li>
+<li>协议封装：<strong>IP 协议号 89</strong></li>
+<li>更新特点：<strong>触发式增量更新</strong>，只发送拓扑变化部分，不整表刷新</li>
+<li>度量值参考：以<strong>带宽</strong>为依据计算开销 Cost</li>
+</ol>
+<p>补充常见协议号：</p>
+<ul>
+<li>ICMP：1</li>
+<li>TCP：6</li>
+<li>UDP：17</li>
+<li>OSPF：89</li>
+</ul>
+<h2 id="二、OSPF-区域-Area-核心概念"><a href="#二、OSPF-区域-Area-核心概念" class="headerlink" title="二、OSPF 区域 Area 核心概念"></a>二、OSPF 区域 Area 核心概念</h2><h3 id="1-区域作用"><a href="#1-区域作用" class="headerlink" title="1. 区域作用"></a>1. 区域作用</h3><ul>
+<li>适配大型网络，在 AS 内划分多个区域</li>
+<li>减少路由表条目，降低路由器 CPU、内存消耗</li>
+<li>网络拓扑变化仅影响本区域，提升网络稳定性</li>
+</ul>
+<h3 id="2-区域划分规则"><a href="#2-区域划分规则" class="headerlink" title="2. 区域划分规则"></a>2. 区域划分规则</h3><ul>
+<li>以<strong>接口</strong>为单位划分，不是以路由器为单位</li>
+<li>不能说“路由器属于某个区域”，只能说“路由器某个接口属于某区域”</li>
+<li>同区域路由器仅维护本区域完整链路状态信息</li>
+</ul>
+<h3 id="3-区域类型"><a href="#3-区域类型" class="headerlink" title="3. 区域类型"></a>3. 区域类型</h3><ol>
+<li><strong>骨干区域 Area 0</strong><ul>
+<li>核心区域，负责转发非骨干区域间路由</li>
+<li>所有非骨干区域<strong>必须直连 Area 0</strong></li>
+</ul>
+</li>
+<li><strong>非骨干区域（常规区域）</strong><ul>
+<li>非 Area 0 都属于此类</li>
+<li>非骨干区域之间交换路由，<strong>必须经过骨干区域中转</strong></li>
+</ul>
+</li>
+</ol>
+<h2 id="三、OSPF-路由器角色分类"><a href="#三、OSPF-路由器角色分类" class="headerlink" title="三、OSPF 路由器角色分类"></a>三、OSPF 路由器角色分类</h2><ol>
+<li><strong>内部路由器 IR</strong>：所有接口都在同一个区域</li>
+<li><strong>骨干路由器</strong>：至少有一个接口在 Area 0</li>
+<li><strong>ABR 区域边界路由器</strong>：同时连接骨干区域和非骨干区域</li>
+<li><strong>ASBR 自治系统边界路由器</strong>：引入外部路由（静态、其他协议路由）<ul>
+<li>ASBR 不一定是 ABR</li>
+<li>可存在于任意区域，只要引入外部路由即为 ASBR</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、OSPF-核心工作流程"><a href="#四、OSPF-核心工作流程" class="headerlink" title="四、OSPF 核心工作流程"></a>四、OSPF 核心工作流程</h2><ol>
+<li>发送 Hello 包，<strong>发现并建立邻居</strong></li>
+<li>传播 <strong>LSA 链路状态通告</strong>（链路&#x3D;接口，状态&#x3D;地址&#x2F;掩码&#x2F;开销&#x2F;邻居关系等）</li>
+<li>LSA 在<strong>整个区域内泛洪</strong>，不只是直连邻居</li>
+<li>收集所有 LSA，生成 <strong>LSDB 链路状态数据库</strong>（同区域所有路由器 LSDB 完全一致）</li>
+<li>运行 <strong>SPF 最短路径算法</strong>，计算最优路由，存入路由表</li>
+</ol>
+<h2 id="五、OSPF-三张核心表"><a href="#五、OSPF-三张核心表" class="headerlink" title="五、OSPF 三张核心表"></a>五、OSPF 三张核心表</h2><ol>
+<li><strong>邻居表</strong>：记录所有 OSPF 邻居关系</li>
+<li><strong>LSDB 链路状态数据库</strong>：整个区域拓扑底图，同区域完全同步</li>
+<li><strong>路由表</strong>：只存放算法算出的<strong>最佳路由</strong></li>
+</ol>
+<p>命令查看邻居表：<code>display ospf peer</code></p>
+<p>重点：</p>
+<ul>
+<li>邻居≠一定邻接，<strong>邻接一定是邻居</strong></li>
+<li>同区域：邻居表、路由表可以不同，但 <strong>LSDB 必须完全相同</strong></li>
+</ul>
+<h2 id="六、Router-ID-路由器标识"><a href="#六、Router-ID-路由器标识" class="headerlink" title="六、Router-ID 路由器标识"></a>六、Router-ID 路由器标识</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>唯一标识一台 OSPF 路由器，运行 OSPF 必须有 RID</p>
+<h3 id="RID-选举顺序（从上到下优先）"><a href="#RID-选举顺序（从上到下优先）" class="headerlink" title="RID 选举顺序（从上到下优先）"></a>RID 选举顺序（从上到下优先）</h3><ol>
+<li><strong>手动配置（推荐）</strong></li>
+<li>选取<strong>活动环回接口</strong>最大 IP</li>
+<li>选取<strong>活动物理接口</strong>最大 IP</li>
+<li>无任何配置默认 RID：<code>0.0.0.0</code></li>
+</ol>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li><strong>非抢占性</strong>：选好后不会自动变更，需重启 OSPF 进程才会重新选举</li>
+<li>手动配置命令：<code>ospf 1 router-id x.x.x.x</code></li>
+<li>RID 格式同 IP，和路由器接口实际地址无关</li>
+</ul>
+<h2 id="七、OSPF-5-种报文类型"><a href="#七、OSPF-5-种报文类型" class="headerlink" title="七、OSPF 5 种报文类型"></a>七、OSPF 5 种报文类型</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>报文名称</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Hello</td>
+<td>建立、发现、维持邻居关系</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DD 数据库描述</td>
+<td>发送 LSDB 摘要，仅 LSA 头部</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LSR 链路状态请求</td>
+<td>向邻居请求缺失的 LSA 详细信息</td>
+</tr>
+<tr>
+<td>4</td>
+<td>LSU 链路状态更新</td>
+<td>携带完整 LSA 发送路由更新</td>
+</tr>
+<tr>
+<td>5</td>
+<td>LSAck 链路状态确认</td>
+<td>确认收到 LSU 报文</td>
+</tr>
+</tbody></table>
+<p>补充：</p>
+<ul>
+<li>LSA 不是独立数据包，封装在 LSU 里传输</li>
+<li>网络拓扑变化时<strong>触发发送 LSU</strong>，对方回复 LSAck 确认</li>
+</ul>
+<h2 id="八、OSPF-邻居状态机"><a href="#八、OSPF-邻居状态机" class="headerlink" title="八、OSPF 邻居状态机"></a>八、OSPF 邻居状态机</h2><p>状态依次：<br><code>Down → Init → 2-Way → ExStart → Exchange → Loading → Full</code></p>
+<h3 id="状态详解"><a href="#状态详解" class="headerlink" title="状态详解"></a>状态详解</h3><ul>
+<li>Down：未收到 Hello 包，失效状态</li>
+<li>Init：收到 Hello，但报文里无自己 RID</li>
+<li><strong>2-Way 双向稳定状态</strong>：收到 Hello 且发现自身 RID，建立邻居</li>
+<li>ExStart：协商主从关系，RID 大的为 Master</li>
+<li>Exchange：交互 DD 报文，同步 LSDB 摘要</li>
+<li>Loading：交互 LSR&#x2F;LSU，请求并下发完整 LSA</li>
+<li><strong>Full 完全邻接稳定状态</strong>：LSDB 完全同步</li>
+</ul>
+<blockquote>
+<p>只有 <strong>2-Way、Full</strong> 是稳定状态</p>
+</blockquote>
+<h2 id="九、OSPF-邻居建立必备条件"><a href="#九、OSPF-邻居建立必备条件" class="headerlink" title="九、OSPF 邻居建立必备条件"></a>九、OSPF 邻居建立必备条件</h2><ol>
+<li>三层直连</li>
+<li>Router-ID 唯一</li>
+<li>Hello&#x2F;Dead 间隔时间一致</li>
+<li>区域 ID 一致</li>
+<li>认证配置一致（启用认证时）</li>
+<li>链路 MTU 一致（思科默认检查，华为默认不检查）</li>
+<li>以太网环境：网络地址、子网掩码一致</li>
+<li>末梢区域特殊配置一致</li>
+</ol>
+<p>补充：</p>
+<ul>
+<li>必须同一区域才能建邻居</li>
+<li>点到点非以太网：掩码不同也可建立邻居</li>
+</ul>
+<h2 id="十、OSPF-网络类型（基于接口）"><a href="#十、OSPF-网络类型（基于接口）" class="headerlink" title="十、OSPF 网络类型（基于接口）"></a>十、OSPF 网络类型（基于接口）</h2><ol>
+<li><strong>广播型 BMA</strong>：以太网默认类型</li>
+<li><strong>点到点</strong>：PPP、HDLC 链路默认</li>
+<li><strong>NBMA 非广播多路访问</strong>：帧中继、ATM 默认</li>
+<li>点到多点 等其他类型</li>
+</ol>
+<blockquote>
+<p><strong>DR&#x2F;BDR 只在多路访问网络（BMA、NBMA）选举</strong>，跟接入设备数量无关，只要是以太网接口就属于多路访问</p>
+</blockquote>
+<h2 id="十一、DR-与-BDR-详解"><a href="#十一、DR-与-BDR-详解" class="headerlink" title="十一、DR 与 BDR 详解"></a>十一、DR 与 BDR 详解</h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>多路访问网络中减少邻接关系数量，节省带宽、降低设备性能消耗</p>
+<h3 id="角色划分"><a href="#角色划分" class="headerlink" title="角色划分"></a>角色划分</h3><ul>
+<li><strong>DR 指定路由器</strong>：负责收集、转发全网 LSA</li>
+<li><strong>BDR 备用指定路由器</strong>：DR 故障时立即接管</li>
+<li><strong>DRothers 普通路由器</strong></li>
+</ul>
+<h3 id="邻接关系规则"><a href="#邻接关系规则" class="headerlink" title="邻接关系规则"></a>邻接关系规则</h3><ul>
+<li>DR、BDR 与所有 DRothers 保持 <strong>Full 邻接</strong></li>
+<li>DRothers 之间只维持 <strong>2-Way 邻居</strong>，不建立 Full</li>
+</ul>
+<h3 id="组播地址"><a href="#组播地址" class="headerlink" title="组播地址"></a>组播地址</h3><ul>
+<li><code>224.0.0.5</code>：所有 OSPF 路由器监听</li>
+<li><code>224.0.0.6</code>：DR&#x2F;BDR 专用，DRothers 向此地址发更新</li>
+</ul>
+<h3 id="选举规则"><a href="#选举规则" class="headerlink" title="选举规则"></a>选举规则</h3><ol>
+<li>接口优先级 0~255，<strong>默认 1</strong>，优先级越高越优先</li>
+<li>优先级为 <strong>0</strong> 不参与选举</li>
+<li>优先级相同，<strong>RID 越大越优先</strong></li>
+<li>先选 BDR，再升为 DR</li>
+</ol>
+<h3 id="核心特性"><a href="#核心特性" class="headerlink" title="核心特性"></a>核心特性</h3><p><strong>非抢占性</strong>：选举完成后，新接入更高优先级设备，不会抢占现有 DR&#x2F;BDR 角色；仅 DR&#x2F;BDR 全部故障或重启 OSPF 才会重新选举</p>
+<h2 id="十二、OSPF-度量值-Cost-开销"><a href="#十二、OSPF-度量值-Cost-开销" class="headerlink" title="十二、OSPF 度量值 Cost 开销"></a>十二、OSPF 度量值 Cost 开销</h2><ol>
+<li><p>计算公式：<br>  [<br>  Cost &#x3D; \frac{10^8}{接口带宽(bps)}<br>  ]<br>  参考带宽默认 100Mbps</p>
+</li>
+<li><p>路由总开销：从源到目标<strong>所有出站接口 Cost 累加</strong></p>
+</li>
+<li><p>每个运行 OSPF 的接口都独立维护自身 Cost 值</p>
+</li>
+</ol>
+<h2 id="十三、重点易错总结"><a href="#十三、重点易错总结" class="headerlink" title="十三、重点易错总结"></a>十三、重点易错总结</h2><ol>
+<li>RIP 距离矢量、OSPF 链路状态，OSPF 无路由环路、收敛更快</li>
+<li>区域边界在<strong>接口</strong>，不在路由器</li>
+<li>ASBR 和 ABR 概念独立，ASBR 不一定是 ABR</li>
+<li>同区域 LSDB 必须一致，邻居表、路由表可以不同</li>
+<li>邻居不一定邻接，邻接一定是邻居</li>
+<li>DR&#x2F;BDR 选举非抢占，优先级 0 无参选资格</li>
+<li>OSPF 基于带宽算开销，不是跳数</li>
+<li>224.0.0.5 全网、224.0.0.6 仅 DR&#x2F;BDR</li>
+<li>RID 手动配置最优，选举后非抢占</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
