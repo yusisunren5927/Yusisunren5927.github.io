@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yusisunren5927.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="一、路由核心基础概念  路由基本原理  路由过程双向通信，必须有去有回，缺一不可。  路由器转发数据包的两大关键要素：下一跳、出接口。  下一跳：下一台路由器的接口 IP 地址，可存在多个下一跳地址。 路由器核心工作流程  接收 IP 数据包，解析 IP 头部目的 IP 地址；  查询本地路由表，按照规则匹配最佳路径；  将数据包从对应出接口转发至下一跳；  日常持续维护、更新路由表。  二、路由">
+    <meta name="description" content="一、RIP 基础概述RIP 全称 Routing Information Protocol 路由信息协议  协议类型：距离矢量路由协议，属于 IGP 内部网关协议 适用场景：中小型网络，分为 RIPv1、RIPv2 两个版本 传输承载：基于 UDP 协议，默认目标端口号 520 更新机制：周期性路由更新 防环特性：支持水平分割、毒性逆转、触发更新 层级归属：传输层之上，归为应用层协议  二、RIP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rip协议">
 <meta property="og:url" content="https://yusisunren5927.github.io/2026/05/14/rip%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="某贪心鬼的后花园">
-<meta property="og:description" content="一、路由核心基础概念  路由基本原理  路由过程双向通信，必须有去有回，缺一不可。  路由器转发数据包的两大关键要素：下一跳、出接口。  下一跳：下一台路由器的接口 IP 地址，可存在多个下一跳地址。 路由器核心工作流程  接收 IP 数据包，解析 IP 头部目的 IP 地址；  查询本地路由表，按照规则匹配最佳路径；  将数据包从对应出接口转发至下一跳；  日常持续维护、更新路由表。  二、路由">
+<meta property="og:description" content="一、RIP 基础概述RIP 全称 Routing Information Protocol 路由信息协议  协议类型：距离矢量路由协议，属于 IGP 内部网关协议 适用场景：中小型网络，分为 RIPv1、RIPv2 两个版本 传输承载：基于 UDP 协议，默认目标端口号 520 更新机制：周期性路由更新 防环特性：支持水平分割、毒性逆转、触发更新 层级归属：传输层之上，归为应用层协议  二、RIP">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-14T15:00:45.000Z">
-<meta property="article:modified_time" content="2026-05-14T15:06:33.208Z">
+<meta property="article:modified_time" content="2026-05-15T07:02:43.264Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -128,7 +128,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E8%B7%AF%E7%94%B1-%E9%BB%98%E8%AE%A4%E4%BC%98%E5%85%88%E7%BA%A760"><span class="nav-number">1.</span> <span class="nav-text">主路由 默认优先级60</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%87%E8%B7%AF%E7%94%B1-%E8%B0%83%E9%AB%98%E4%BC%98%E5%85%88%E7%BA%A7%E6%95%B0%E5%80%BC%EF%BC%8C%E4%BD%9C%E4%B8%BA%E5%A4%87%E4%BB%BD"><span class="nav-number">2.</span> <span class="nav-text">备路由 调高优先级数值，作为备份</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF%E5%8F%91%E5%B8%83%E7%BC%BA%E7%9C%81%E8%B7%AF%E7%94%B1"><span class="nav-number">3.</span> <span class="nav-text">OSPF发布缺省路由</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9B%9E%E7%8E%AF%E5%8F%A3"><span class="nav-number">4.</span> <span class="nav-text">创建回环口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEIP%E5%9C%B0%E5%9D%80"><span class="nav-number">5.</span> <span class="nav-text">配置IP地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F1%EF%BC%9A%E6%89%8B%E5%8A%A8%E5%AE%A3%E5%91%8A%E7%BD%91%E6%AE%B5"><span class="nav-number">6.</span> <span class="nav-text">方式1：手动宣告网段</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F2%EF%BC%9A%E5%8D%8F%E8%AE%AE%E5%BC%95%E5%85%A5"><span class="nav-number">7.</span> <span class="nav-text">方式2：协议引入</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81RIP-%E5%9F%BA%E7%A1%80%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、RIP 基础概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81RIP-%E6%A0%B8%E5%BF%83%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">二、RIP 核心特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81RIP-%E5%BA%A6%E9%87%8F%E5%80%BC%E8%A7%84%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">三、RIP 度量值规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81RIP-%E5%91%A8%E6%9C%9F%E6%80%A7%E6%9B%B4%E6%96%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">四、RIP 周期性更新机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81RIPv1-%E4%B8%8E-RIPv2-%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">五、RIPv1 与 RIPv2 核心区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81RIP-%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F%E8%A6%81%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">六、RIP 报文格式要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RIPv1-%E6%8A%A5%E6%96%87"><span class="nav-number">6.1.</span> <span class="nav-text">RIPv1 报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RIPv2-%E6%8A%A5%E6%96%87"><span class="nav-number">6.2.</span> <span class="nav-text">RIPv2 报文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81RIP-%E8%B7%AF%E7%94%B1%E7%8E%AF%E8%B7%AF%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0"><span class="nav-number">7.</span> <span class="nav-text">七、RIP 路由环路产生原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81RIP-%E4%B8%89%E5%A4%A7%E7%8E%AF%E8%B7%AF%E9%81%BF%E5%85%8D%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">八、RIP 三大环路避免机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B0%B4%E5%B9%B3%E5%88%86%E5%89%B2"><span class="nav-number">8.1.</span> <span class="nav-text">1. 水平分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%AF%92%E6%80%A7%E9%80%86%E8%BD%AC"><span class="nav-number">8.2.</span> <span class="nav-text">2. 毒性逆转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A7%A6%E5%8F%91%E6%9B%B4%E6%96%B0"><span class="nav-number">8.3.</span> <span class="nav-text">3. 触发更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81RIP-%E5%85%B3%E9%94%AE%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8"><span class="nav-number">9.</span> <span class="nav-text">九、RIP 关键配置命令大全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E9%87%8D%E7%82%B9%E6%98%93%E9%94%99%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">十、重点易错知识点总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -201,9 +201,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2026-05-14 23:00:45 / 修改时间：23:06:33" itemprop="dateCreated datePublished" datetime="2026-05-14T23:00:45+08:00">2026-05-14</time>
+      <time title="创建时间：2026-05-14 23:00:45" itemprop="dateCreated datePublished" datetime="2026-05-14T23:00:45+08:00">2026-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-05-15 15:02:43" itemprop="dateModified" datetime="2026-05-15T15:02:43+08:00">2026-05-15</time>
     </span>
 
   
@@ -215,37 +221,154 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>一、路由核心基础概念</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="一、RIP-基础概述"><a href="#一、RIP-基础概述" class="headerlink" title="一、RIP 基础概述"></a>一、RIP 基础概述</h2><p>RIP 全称 <strong>Routing Information Protocol 路由信息协议</strong></p>
 <ol>
-<li>路由基本原理<br>  路由过程双向通信，必须有去有回，缺一不可。<br>  路由器转发数据包的两大关键要素：下一跳、出接口。<br>  下一跳：下一台路由器的接口 IP 地址，可存在多个下一跳地址。</li>
-<li>路由器核心工作流程<br>  接收 IP 数据包，解析 IP 头部目的 IP 地址；<br>  查询本地路由表，按照规则匹配最佳路径；<br>  将数据包从对应出接口转发至下一跳；<br>  日常持续维护、更新路由表。<br>  二、路由表详解</li>
-<li>路由表查看命令<br>  华为设备查看路由表：<br>  bash<br>  运行<br>  display ip routing-table</li>
-<li>路由表核心字段说明<br>  表格<br>  段	含义	作用规则</li>
+<li>协议类型：<strong>距离矢量路由协议</strong>，属于 IGP 内部网关协议</li>
+<li>适用场景：中小型网络，分为 <strong>RIPv1、RIPv2</strong> 两个版本</li>
+<li>传输承载：基于 <strong>UDP</strong> 协议，默认目标端口号 <strong>520</strong></li>
+<li>更新机制：<strong>周期性路由更新</strong></li>
+<li>防环特性：支持<strong>水平分割、毒性逆转、触发更新</strong></li>
+<li>层级归属：传输层之上，归为<strong>应用层协议</strong></li>
 </ol>
-<p>  estination&#x2F;Mask	目标网络 + 子网掩码	最长匹配原则，精准匹配目标网段<br>  roto	路由协议 &#x2F; 路由来源	标识路由是直连、静态、OSPF、RIP 等<br>  re（优先级）	路由优先级	数值越低优先级越高，优选同网段路由<br>  ost（开销 &#x2F; 度量值）	路径开销	同协议同网段，数值越低路径越优，可手动调整<br>  extHop	下一跳地址	转发数据包的下一台路由器接口地址<br>  nterface	出接口	数据包从本路由器哪个接口转发出去<br>5. 路由表核心规则<br>  路由表仅存放最优路径；<br>  目标网络不在路由表中，数据包直接丢弃；<br>  子网掩码：划分网段 + 路由匹配的核心依据，遵循最长匹配原则。<br>6. 最长匹配原则<br>  路由器查找路由表流程：<br>  目的 IP 与路由表掩码做与运算；<br>  匹配路由表目标网段；<br>  优先选择掩码最长的路由作为转发路径。<br>  三、等价路由、负载均衡与路由备份<br>7. 等价路由 ECMP<br>  全称：Equal Cost Multi-Path 等价多路径<br>  同一路由协议、同一目标网络，优先级、开销值完全相同；<br>  多条路由同时写入路由表，流量自动负载分担；<br>  分担算法：轮询、哈希、比例分配，非平均分配；<br>  作用：叠加带宽、均衡链路压力、链路冗余。<br>8. 负载均衡 VS 路由备份（主备路由）<br>  表格<br>  性	负载均衡（ECMP）	路由备份（浮动静态 &#x2F; 主备）<br>  径使用	多条链路同时工作	仅主链路工作，备用链路休眠<br>  由优先级	优先级完全一致	主路由优先级更高（数值更小）<br>  宽利用	多链路带宽叠加	仅主链路带宽生效<br>  障切换	单链路故障，剩余链路分担流量	主链路失效，备用链路自动接管<br>  置目的	提升吞吐量、均衡负载	网络冗余、高可用故障备份<br>  用场景	骨干网、数据中心、多链路聚合	企业双出口、末梢网络备份<br>  配置示例<br>  负载均衡（两条静态路由优先级、开销一致）<br>  bash<br>  运行<br>  ip route-static 10.0.0.0 255.255.255.0 1.1.1.1<br>  ip route-static 10.0.0.0 255.255.255.0 2.2.2.2<br>  路由备份（浮动静态路由，修改优先级）<br>  bash<br>  运行</p>
-<h1 id="主路由-默认优先级60"><a href="#主路由-默认优先级60" class="headerlink" title="主路由 默认优先级60"></a>主路由 默认优先级60</h1><p>ip route-static 192.168.2.0 255.255.255.0 10.0.12.2</p>
-<h1 id="备路由-调高优先级数值，作为备份"><a href="#备路由-调高优先级数值，作为备份" class="headerlink" title="备路由 调高优先级数值，作为备份"></a>备路由 调高优先级数值，作为备份</h1><p>ip route-static 192.168.2.0 255.255.255.0 20.0.12.2 preference 100<br>四、路由的三大来源</p>
-<ol>
-<li>直连路由<br>  来源：路由器接口配置 IP 且接口 UP，自动生成；<br>  优先级：Pre&#x3D;0，优先级最高，不可手动修改。</li>
-<li>静态路由<br>  来源：管理员手工手动配置；<br>  特点：拓扑变更需手动修改，适合小型固定网络；<br>  默认优先级：Pre&#x3D;60。<br>  静态路由配置命令<br>  bash<br>  运行<br>  ip route-static 目标网络 子网掩码 下一跳地址&#x2F;出接口<br>  配置注意：<br>  以太网接口：必须指定下一跳；<br>  串口接口：可填下一跳或出接口；<br>  通信双向，务必配置回程路由；<br>  工程中优先使用下一跳地址配置。</li>
-<li>动态路由<br>  来源：路由器通过路由协议自动邻居学习、同步路由；<br>  特点：拓扑变化自动收敛，无需人工干预，适合中大型网络。<br>  五、缺省路由（默认路由）</li>
-<li>概念<br>  特殊路由：0.0.0.0&#x2F;0，所有路由表无匹配网段的数据包，全部按照缺省路由转发。</li>
-<li>应用场景<br>  家庭上网、企业出口、末梢网络，充当网关角色。</li>
-<li>配置命令<br>  bash<br>  运行<br>  ip route-static 0.0.0.0 0.0.0.0 下一跳地址</li>
-<li>补充<br>  可通过静态路由手工配置，也可通过 OSPF 等动态协议发布：<br>  bash<br>  运行</li>
+<h2 id="二、RIP-核心特点"><a href="#二、RIP-核心特点" class="headerlink" title="二、RIP 核心特点"></a>二、RIP 核心特点</h2><ul>
+<li>配置简单、易于维护</li>
+<li>适配<strong>小型局域网 &#x2F; 中小型网络</strong></li>
+<li>度量值采用<strong>跳数</strong>计算路由远近</li>
+<li>仅接口开启 RIP 后，才会收发路由更新报文</li>
+</ul>
+<h2 id="三、RIP-度量值规则"><a href="#三、RIP-度量值规则" class="headerlink" title="三、RIP 度量值规则"></a>三、RIP 度量值规则</h2><ol>
+<li>以<strong>跳数</strong>作为唯一度量值，衡量到达目标网络距离</li>
+<li>直连网络默认跳数为 <strong>0</strong></li>
+<li>路由器发送路由更新时，度量值自动 <strong>+1</strong></li>
+<li>最大有效跳数：<strong>15 跳</strong></li>
+<li><strong>16 跳</strong> 判定为网络不可达</li>
 </ol>
-<h1 id="OSPF发布缺省路由"><a href="#OSPF发布缺省路由" class="headerlink" title="OSPF发布缺省路由"></a>OSPF发布缺省路由</h1><p>default-route-advertise<br>六、Loopback 回环接口</p>
-<ol>
-<li>特点<br>  虚拟逻辑接口，创建后默认永远 UP，不受物理链路影响；<br>  稳定性极强，常用于设备管理、协议搭建。</li>
-<li>配置命令<br>  bash<br>  运行</li>
+<h2 id="四、RIP-周期性更新机制"><a href="#四、RIP-周期性更新机制" class="headerlink" title="四、RIP 周期性更新机制"></a>四、RIP 周期性更新机制</h2><ol>
+<li>网络稳定后，路由器默认 <strong>30s</strong> 周期性发送完整路由表更新</li>
+<li>时间并非严格精准 30 秒，存在随机偏移</li>
+<li>仅宣告网段内的接口，参与 RIP 路由收发</li>
 </ol>
-<h1 id="创建回环口"><a href="#创建回环口" class="headerlink" title="创建回环口"></a>创建回环口</h1><p>interface loopback 0</p>
-<h1 id="配置IP地址"><a href="#配置IP地址" class="headerlink" title="配置IP地址"></a>配置IP地址</h1><p>ip address 1.1.1.1 255.255.255.0<br>3. 核心作用<br>  模拟直连网段，用于网络测试；<br>  作为 OSPF、BGP、MPLS 等协议的 Router-id &#x2F; 源地址；<br>  SNMP 告警消息源地址；<br>  代替物理接口做设备远程管理。<br>  七、静态路由 &amp; 动态路由 区别<br>  表格<br>  比项	静态路由	动态路由<br>  置方式	管理员手工逐条配置	路由协议自动邻居学习<br>  扑变更	网络变化需手动修改路由	拓扑变化自动收敛更新<br>  用场景	小型网络、拓扑固定	中大型网络、拓扑易变更<br>  源开销	占用 CPU、带宽极低	协议报文占用一定带宽和设备性能<br>  八、动态路由协议分类<br>4. 按作用范围划分<br>  IGP 内部网关协议：同一 AS 自治系统内部使用<br>  协议：RIP、OSPF、IS-IS<br>  EGP 外部网关协议：不同 AS 自治系统之间使用<br>  协议：BGP（全球互联网骨干路由核心协议）<br>  自治系统 AS：统一管理下的网络，如电信、移动、企业内网。<br>5. 按算法类型划分<br>  距离矢量协议<br>  代表：RIP、EIGRP（思科私有）<br>  特点：只看跳数 &#x2F; 距离 + 转发方向，配置简单、扩展性差；RIP 仅以跳数选路，不考虑链路带宽。<br>  链路状态协议<br>  代表：OSPF、IS-IS<br>  特点：泛洪 LSA 链路状态通告，全网同步拓扑数据库，自己计算最优路径；仅链路变化时更新报文，节省带宽。<br>6. 按是否携带子网掩码划分<br>  有类路由 Classful：不携带掩码，如 RIPv1、IGRP；依赖 IP 默认 A&#x2F;B&#x2F;C 类网段，易子网路由错误。<br>  无类路由 Classless：携带掩码，如 RIPv2、OSPF、IS-IS、BGP；支持子网划分，现代网络全部使用无类路由。<br>  九、路由协议基础规则<br>  路由协议运行在接口上，接口未启用则无法学习路由；<br>  同协议可直接互相学习路由，不同协议不能直接共享；<br>  跨协议路由交换需要路由引入 import-route。<br>  路由引入示例（RIP 引入 OSPF 路由）<br>  bash<br>  运行</p>
-<h1 id="方式1：手动宣告网段"><a href="#方式1：手动宣告网段" class="headerlink" title="方式1：手动宣告网段"></a>方式1：手动宣告网段</h1><p>network 192.168.200.0</p>
-<h1 id="方式2：协议引入"><a href="#方式2：协议引入" class="headerlink" title="方式2：协议引入"></a>方式2：协议引入</h1><p>import-route ospf 1<br>十、路由收敛 &amp; 协议性能指标</p>
-<ol>
-<li>路由收敛<br>  所有路由器路由表同步完整网络路由信息，网络达到稳定转发状态；收敛完成前网络无法正常全网通信。<br>  RIP 收敛速度最慢，OSPF&#x2F;IS-IS 收敛更快。</li>
-<li>动态路由协议衡量指标<br>  正确性：无路由自环、可选出最优路径；<br>  快收敛：拓扑变更后快速更新路由；<br>  低开销：占用设备 CPU、内存、网络带宽小；<br>  安全性：具备防攻击、协议认证机制；<br>  普适性：适配各类网络拓扑与大中小型网络规模。</li>
+<h2 id="五、RIPv1-与-RIPv2-核心区别"><a href="#五、RIPv1-与-RIPv2-核心区别" class="headerlink" title="五、RIPv1 与 RIPv2 核心区别"></a>五、RIPv1 与 RIPv2 核心区别</h2><p>表格</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>RIPv1</th>
+<th>RIPv2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>协议类型</td>
+<td>有类别路由协议</td>
+<td>无类别路由协议</td>
+</tr>
+<tr>
+<td>VLSM&#x2F;CIDR</td>
+<td>不支持</td>
+<td>支持 VLSM、路由聚合、CIDR</td>
+</tr>
+<tr>
+<td>报文发送方式</td>
+<td>仅<strong>广播</strong> 255.255.255.255</td>
+<td>广播 &#x2F; 组播 <strong>224.0.0.9</strong></td>
+</tr>
+<tr>
+<td>认证功能</td>
+<td>不支持密码认证</td>
+<td>支持<strong>明文认证、MD5 密文认证</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>配置切换命令：<code>version 2</code> 可将 RIPv1 升级为 RIPv2</p>
+</blockquote>
+<h2 id="六、RIP-报文格式要点"><a href="#六、RIP-报文格式要点" class="headerlink" title="六、RIP 报文格式要点"></a>六、RIP 报文格式要点</h2><h3 id="RIPv1-报文"><a href="#RIPv1-报文" class="headerlink" title="RIPv1 报文"></a>RIPv1 报文</h3><ul>
+<li>UDP 端口固定 520</li>
+<li>目的地址：广播地址 255.255.255.255</li>
+<li>报文存在多个 Must be Zero 保留字段</li>
+<li>无子网掩码、下一跳、路由 Tag 字段</li>
+</ul>
+<h3 id="RIPv2-报文"><a href="#RIPv2-报文" class="headerlink" title="RIPv2 报文"></a>RIPv2 报文</h3><ul>
+<li>同样使用 UDP 520 端口</li>
+<li>默认组播地址：224.0.0.9</li>
+<li>新增字段：路由标签、子网掩码、下一跳</li>
+<li>支持认证字段，可配置明文 &#x2F; MD5 认证</li>
+</ul>
+<h2 id="七、RIP-路由环路产生原因"><a href="#七、RIP-路由环路产生原因" class="headerlink" title="七、RIP 路由环路产生原因"></a>七、RIP 路由环路产生原因</h2><p>路由环路</p>
+<p>16 跳</p>
+<h2 id="八、RIP-三大环路避免机制"><a href="#八、RIP-三大环路避免机制" class="headerlink" title="八、RIP 三大环路避免机制"></a>八、RIP 三大环路避免机制</h2><h3 id="1-水平分割"><a href="#1-水平分割" class="headerlink" title="1. 水平分割"></a>1. 水平分割</h3><p>从某个接口学到的路由，不会从该接口再发回邻居</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rip split-horizon</span><br></pre></td></tr></table></figure>
+
+<p>默认开启</p>
+<h3 id="2-毒性逆转"><a href="#2-毒性逆转" class="headerlink" title="2. 毒性逆转"></a>2. 毒性逆转</h3><p>16（不可达）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rip poison-reverse</span><br></pre></td></tr></table></figure>
+
+<p>默认关闭</p>
+<p>水平分割 + 毒性逆转同时开启时，以毒性逆转为准</p>
+<h3 id="3-触发更新"><a href="#3-触发更新" class="headerlink" title="3. 触发更新"></a>3. 触发更新</h3><p>发生故障 &#x2F; 变更时</p>
+<h2 id="九、RIP-关键配置命令大全"><a href="#九、RIP-关键配置命令大全" class="headerlink" title="九、RIP 关键配置命令大全"></a>九、RIP 关键配置命令大全</h2><p>表格</p>
+<table>
+<thead>
+<tr>
+<th>配置命令</th>
+<th>功能备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>rip 1</code></td>
+<td>开启 RIP 进程，默认进程号为 1</td>
+</tr>
+<tr>
+<td><code>version 2</code></td>
+<td>切换为 RIPv2 版本</td>
+</tr>
+<tr>
+<td><code>network 主类网络地址</code></td>
+<td>宣告网络，仅主类网段，接口加入 RIP 收发</td>
+</tr>
+<tr>
+<td><code>rip metricin 5</code></td>
+<td>接收路由时，跳数增加 5（累加计算）</td>
+</tr>
+<tr>
+<td><code>rip metricout 5</code></td>
+<td>发送路由时，跳数修改累加 5</td>
+</tr>
+<tr>
+<td><code>rip split-horizon</code></td>
+<td>开启水平分割，设备默认开启</td>
+</tr>
+<tr>
+<td><code>rip poison-reverse</code></td>
+<td>开启毒性逆转，设备默认关闭</td>
+</tr>
+<tr>
+<td><code>undo rip input</code></td>
+<td>禁止接口接收 RIP 数据包</td>
+</tr>
+<tr>
+<td><code>undo rip output</code></td>
+<td>禁止接口发送 RIP 数据包</td>
+</tr>
+<tr>
+<td><code>silent-interface g0/0/0</code></td>
+<td>配置被动接口：<strong>只收不发</strong>路由报文</td>
+</tr>
+<tr>
+<td><code>display rip</code></td>
+<td>查看 RIP 整体配置与路由信息</td>
+</tr>
+<tr>
+<td><code>display rip int g0/0/0 verbose</code></td>
+<td>查看 RIP 接口详细信息</td>
+</tr>
+</tbody></table>
+<h2 id="十、重点易错知识点总结"><a href="#十、重点易错知识点总结" class="headerlink" title="十、重点易错知识点总结"></a>十、重点易错知识点总结</h2><ol>
+<li>度量值修改是<strong>跳数累加加减</strong>，不是直接覆盖修改为固定值</li>
+<li><code>undo rip input/output</code> 可单独开启 &#x2F; 关闭，<strong>不发 ≠ 不收</strong></li>
+<li>被动接口只收不发，但仍能学习其他路由器路由</li>
+<li>RIPv1 无认证，RIPv2 支持明文、MD5 两种认证</li>
+<li>15 跳可达、16 跳直接判定不可达，是 RIP 核心规则</li>
+<li>水平分割与毒性逆转共存，<strong>毒性逆转优先级更高</strong></li>
 </ol>
 
     </div>
