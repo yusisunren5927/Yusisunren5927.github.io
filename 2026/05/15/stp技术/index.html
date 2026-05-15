@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yusisunren5927.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="一、STP 基础概念 适用场景：只有二层交换机需要STP，三层设备不用。 为网络做冗余备份链路，但多条链路会产生二层环路。 环路带来三大危害： 广播风暴无限循环 MAC地址表频繁震荡 占用设备CPU、带宽，全网卡顿   STP 默认交换机出厂自动开启；关闭命令：stp disable STP 属于组播协议，不是广播；组播MAC：01-80-C2-00-00-00  二、STP 两大核心作用 消除环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stp技术">
+<meta property="og:url" content="https://yusisunren5927.github.io/2026/05/15/stp%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="某贪心鬼的后花园">
+<meta property="og:description" content="一、STP 基础概念 适用场景：只有二层交换机需要STP，三层设备不用。 为网络做冗余备份链路，但多条链路会产生二层环路。 环路带来三大危害： 广播风暴无限循环 MAC地址表频繁震荡 占用设备CPU、带宽，全网卡顿   STP 默认交换机出厂自动开启；关闭命令：stp disable STP 属于组播协议，不是广播；组播MAC：01-80-C2-00-00-00  二、STP 两大核心作用 消除环">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-15T08:34:57.000Z">
+<meta property="article:modified_time" content="2026-05-15T08:35:58.966Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yusisunren5927.github.io/2026/05/15/stp%E6%8A%80%E6%9C%AF/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yusisunren5927.github.io/2026/05/15/stp%E6%8A%80%E6%9C%AF/","path":"2026/05/15/stp技术/","title":"stp技术"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>stp技术 | 某贪心鬼的后花园</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">某贪心鬼的后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81STP-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">一、STP 基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81STP-%E4%B8%A4%E5%A4%A7%E6%A0%B8%E5%BF%83%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">二、STP 两大核心作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81STP-%E5%B7%A5%E4%BD%9C%E5%9B%9B%E6%AD%A5%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">三、STP 工作四步流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81BPDU-%E6%A1%A5%E5%8D%8F%E8%AE%AE%E6%95%B0%E6%8D%AE%E5%8D%95%E5%85%83"><span class="nav-number">4.</span> <span class="nav-text">四、BPDU 桥协议数据单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%A0%87%E8%AF%86%EF%BC%9ABID-%E6%A1%A5ID-PID-%E7%AB%AF%E5%8F%A3ID"><span class="nav-number">5.</span> <span class="nav-text">五、核心标识：BID 桥ID &amp; PID 端口ID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-BID-%E6%A1%A5ID%EF%BC%88%E6%95%B4%E5%8F%B0%E4%BA%A4%E6%8D%A2%E6%9C%BA%E6%A0%87%E8%AF%86%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">1. BID 桥ID（整台交换机标识）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-PID-%E7%AB%AF%E5%8F%A3ID"><span class="nav-number">5.2.</span> <span class="nav-text">2. PID 端口ID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%B7%AF%E5%BE%84%E5%BC%80%E9%94%80-Path-Cost"><span class="nav-number">6.</span> <span class="nav-text">六、路径开销 Path Cost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%B8%89%E5%A4%A7%E8%A7%92%E8%89%B2%E9%80%89%E4%B8%BE%E8%A7%84%E5%88%99"><span class="nav-number">7.</span> <span class="nav-text">七、三大角色选举规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B9%E6%A1%A5%E9%80%89%E4%B8%BE"><span class="nav-number">7.1.</span> <span class="nav-text">1. 根桥选举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A0%B9%E7%AB%AF%E5%8F%A3-RP%EF%BC%88%E9%9D%9E%E6%A0%B9%E6%A1%A5%E4%B8%8A%E5%94%AF%E4%B8%80%E6%9C%80%E4%BC%98%E7%AB%AF%E5%8F%A3%EF%BC%89"><span class="nav-number">7.2.</span> <span class="nav-text">2. 根端口 RP（非根桥上唯一最优端口）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3-DP%EF%BC%88%E6%AF%8F%E4%B8%AA%E7%BD%91%E6%AE%B5%E9%80%89%E4%B8%80%E4%B8%AA%EF%BC%89"><span class="nav-number">7.3.</span> <span class="nav-text">3. 指定端口 DP（每个网段选一个）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%98%BB%E5%A1%9E%E7%AB%AF%E5%8F%A3"><span class="nav-number">7.4.</span> <span class="nav-text">4. 阻塞端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81STP-%E7%AB%AF%E5%8F%A3%E7%8A%B6%E6%80%81%EF%BC%88802-1D%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">八、STP 端口状态（802.1D）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-RSTP-%E5%AF%B9%E5%BA%94"><span class="nav-number">8.1.</span> <span class="nav-text">与 RSTP 对应</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81STP-%E4%B8%89%E5%A4%A7%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="nav-number">9.</span> <span class="nav-text">九、STP 三大计时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81STP-%E6%8B%93%E6%89%91%E5%8F%98%E6%9B%B4%E6%9C%BA%E5%88%B6"><span class="nav-number">10.</span> <span class="nav-text">十、STP 拓扑变更机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81STP-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-number">11.</span> <span class="nav-text">十一、STP 常用配置命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E6%98%93%E9%94%99%E5%BF%85%E8%AE%B0%E8%80%83%E7%82%B9"><span class="nav-number">12.</span> <span class="nav-text">十二、易错必记考点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/stp%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="stp技术 | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          stp技术
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 16:34:57 / 修改时间：16:35:58" itemprop="dateCreated datePublished" datetime="2026-05-15T16:34:57+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、STP-基础概念"><a href="#一、STP-基础概念" class="headerlink" title="一、STP 基础概念"></a>一、STP 基础概念</h2><ol>
+<li><strong>适用场景</strong>：<strong>只有二层交换机需要STP</strong>，三层设备不用。</li>
+<li>为网络做<strong>冗余备份链路</strong>，但多条链路会产生<strong>二层环路</strong>。</li>
+<li>环路带来三大危害：<ul>
+<li>广播风暴无限循环</li>
+<li>MAC地址表频繁震荡</li>
+<li>占用设备CPU、带宽，全网卡顿</li>
+</ul>
+</li>
+<li>STP 默认<strong>交换机出厂自动开启</strong>；关闭命令：<code>stp disable</code></li>
+<li>STP 属于<strong>组播协议</strong>，不是广播；组播MAC：<code>01-80-C2-00-00-00</code></li>
+</ol>
+<h2 id="二、STP-两大核心作用"><a href="#二、STP-两大核心作用" class="headerlink" title="二、STP 两大核心作用"></a>二、STP 两大核心作用</h2><ol>
+<li><strong>消除环路</strong>：逻辑阻塞冗余端口，把环路修剪成树型无环拓扑</li>
+<li><strong>链路备份</strong>：主链路故障，自动放开阻塞端口，恢复通信</li>
+</ol>
+<h2 id="三、STP-工作四步流程"><a href="#三、STP-工作四步流程" class="headerlink" title="三、STP 工作四步流程"></a>三、STP 工作四步流程</h2><ol>
+<li>全网选举 <strong>根桥</strong></li>
+<li>所有<strong>非根桥</strong>选举 <strong>根端口 RP</strong></li>
+<li>每个网段选举 <strong>指定端口 DP</strong></li>
+<li>既不是RP也不是DP的端口，<strong>阻塞丢弃</strong></li>
+</ol>
+<blockquote>
+<p>根交换机上<strong>没有根端口</strong>，所有端口都是指定端口</p>
+</blockquote>
+<h2 id="四、BPDU-桥协议数据单元"><a href="#四、BPDU-桥协议数据单元" class="headerlink" title="四、BPDU 桥协议数据单元"></a>四、BPDU 桥协议数据单元</h2><ol>
+<li>STP 靠发送 <strong>BPDU</strong> 报文进行选举、收敛、维护拓扑</li>
+<li>两种 BPDU：<ul>
+<li><strong>配置BPDU</strong>：选举根桥、端口角色、维持拓扑，根桥<strong>每2秒</strong>发一次</li>
+<li><strong>TCN 拓扑变更BPDU</strong>：链路故障时向上通知根桥，触发全网MAC表刷新</li>
+</ul>
+</li>
+<li>BPDU 关键字段：<br>根桥ID、根路径开销RPC、桥ID、端口ID、计时器</li>
+</ol>
+<h2 id="五、核心标识：BID-桥ID-PID-端口ID"><a href="#五、核心标识：BID-桥ID-PID-端口ID" class="headerlink" title="五、核心标识：BID 桥ID &amp; PID 端口ID"></a>五、核心标识：BID 桥ID &amp; PID 端口ID</h2><h3 id="1-BID-桥ID（整台交换机标识）"><a href="#1-BID-桥ID（整台交换机标识）" class="headerlink" title="1. BID 桥ID（整台交换机标识）"></a>1. BID 桥ID（整台交换机标识）</h3><ul>
+<li>组成：<strong>2字节优先级 + 6字节MAC地址</strong></li>
+<li>优先级范围：0～65535，<strong>默认32768</strong></li>
+<li>规则：只能是 <strong>4096的倍数</strong></li>
+<li>选举：<strong>越小越优先</strong> → 先比优先级，相同再比MAC</li>
+</ul>
+<h3 id="2-PID-端口ID"><a href="#2-PID-端口ID" class="headerlink" title="2. PID 端口ID"></a>2. PID 端口ID</h3><ul>
+<li>组成：<strong>高8位端口优先级 + 低8位端口编号</strong></li>
+<li>端口优先级默认128，范围0～255</li>
+</ul>
+<h2 id="六、路径开销-Path-Cost"><a href="#六、路径开销-Path-Cost" class="headerlink" title="六、路径开销 Path Cost"></a>六、路径开销 Path Cost</h2><ol>
+<li>带宽越高，路径开销<strong>越小</strong>，越优先</li>
+<li>根路径开销RPC：到达根桥<strong>沿途所有入端口开销累加</strong></li>
+<li>选路原则：<strong>开销越低越优先</strong></li>
+</ol>
+<h2 id="七、三大角色选举规则"><a href="#七、三大角色选举规则" class="headerlink" title="七、三大角色选举规则"></a>七、三大角色选举规则</h2><h3 id="1-根桥选举"><a href="#1-根桥选举" class="headerlink" title="1. 根桥选举"></a>1. 根桥选举</h3><p>所有交换机初始都认为自己是根桥，比较 <strong>BID</strong>，最小者成为根桥。</p>
+<h3 id="2-根端口-RP（非根桥上唯一最优端口）"><a href="#2-根端口-RP（非根桥上唯一最优端口）" class="headerlink" title="2. 根端口 RP（非根桥上唯一最优端口）"></a>2. 根端口 RP（非根桥上唯一最优端口）</h3><p>依次比较：</p>
+<ol>
+<li>根路径开销 <strong>RPC 最小</strong></li>
+<li>对端 BID 最小</li>
+<li>对端 PID 最小</li>
+<li>本端 PID 最小</li>
+</ol>
+<h3 id="3-指定端口-DP（每个网段选一个）"><a href="#3-指定端口-DP（每个网段选一个）" class="headerlink" title="3. 指定端口 DP（每个网段选一个）"></a>3. 指定端口 DP（每个网段选一个）</h3><p>为每个网段选出唯一转发端口，负责转发该网段BPDU和数据；<br>规则同样：RPC → BID → PID；<strong>根桥所有端口都是DP</strong>。</p>
+<h3 id="4-阻塞端口"><a href="#4-阻塞端口" class="headerlink" title="4. 阻塞端口"></a>4. 阻塞端口</h3><p>既不是RP也不是DP，直接被阻塞，不转发用户数据，只监听BPDU。</p>
+<p>查看命令：<code>display stp brief</code></p>
+<h2 id="八、STP-端口状态（802-1D）"><a href="#八、STP-端口状态（802-1D）" class="headerlink" title="八、STP 端口状态（802.1D）"></a>八、STP 端口状态（802.1D）</h2><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>收BPDU</th>
+<th>发数据</th>
+<th>学习MAC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Disabled</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Blocking</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Listening</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Learning</td>
+<td>√</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>Forwarding</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<ul>
+<li>稳定状态：Blocking、Forwarding</li>
+<li>过渡状态：Listening、Learning</li>
+</ul>
+<h3 id="与-RSTP-对应"><a href="#与-RSTP-对应" class="headerlink" title="与 RSTP 对应"></a>与 RSTP 对应</h3><p>STP 五种状态 → RSTP 简化为三种：<br><strong>Discarding、Learning、Forwarding</strong></p>
+<h2 id="九、STP-三大计时器"><a href="#九、STP-三大计时器" class="headerlink" title="九、STP 三大计时器"></a>九、STP 三大计时器</h2><ol>
+<li><strong>Hello Time</strong>：2秒，根桥发送BPDU周期</li>
+<li><strong>Forward Delay</strong>：15秒，监听、学习状态停留时间</li>
+<li><strong>Max Age</strong>：20秒，超时收不到BPDU认为链路故障</li>
+</ol>
+<p>整网收敛时间约 <strong>50秒</strong></p>
+<h2 id="十、STP-拓扑变更机制"><a href="#十、STP-拓扑变更机制" class="headerlink" title="十、STP 拓扑变更机制"></a>十、STP 拓扑变更机制</h2><ol>
+<li>链路故障，交换机发 <strong>TCN 报文</strong> 向上传至根桥</li>
+<li>根桥下发 TC 标记，全网<strong>缩短MAC地址老化时间</strong>，快速刷新表项</li>
+<li>否则要等MAC默认老化300秒，业务长时间不通</li>
+</ol>
+<h2 id="十一、STP-常用配置命令"><a href="#十一、STP-常用配置命令" class="headerlink" title="十一、STP 常用配置命令"></a>十一、STP 常用配置命令</h2><ol>
+<li>配置生成树模式</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp mode stp / rstp / mstp</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改交换机优先级（4096倍数）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp priority 4096</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>直接指定根桥&#x2F;备根桥</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stp root primary</span><br><span class="line">stp root secondary</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>修改路径开销标准</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp pathcost-standard dot1d-1998 / dot1t / legacy</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>关闭STP</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp disable</span><br></pre></td></tr></table></figure>
+
+<h2 id="十二、易错必记考点"><a href="#十二、易错必记考点" class="headerlink" title="十二、易错必记考点"></a>十二、易错必记考点</h2><ol>
+<li>STP 选路<strong>越小越优先</strong>；OSPF DR&#x2F;BDR 是<strong>越大越优先</strong></li>
+<li>优先级必须是 4096 倍数：0、4096、8192……</li>
+<li>根桥无根端口，非根桥有且只有一个根端口</li>
+<li>阻塞端口只收BPDU，不转发业务数据</li>
+<li>拓扑变化靠TCN报文刷新MAC表，不然业务长时间断流</li>
+<li>链路带宽越大，路径开销越小，越容易被选成转发端口</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/15/vlan%E9%97%B4%E8%B7%AF%E7%94%B1/" rel="prev" title="vlan间路由">
+                  <i class="fa fa-angle-left"></i> vlan间路由
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/05/15/dhcp/" rel="next" title="dhcp">
+                  dhcp <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

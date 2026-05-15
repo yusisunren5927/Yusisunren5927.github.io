@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yusisunren5927.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="NAT 网络地址转换 完整版知识点总结一、NAT 基础概念 全称：Network Address Translation 网络地址转换 产生背景：解决 IPv4 公网地址枯竭 问题，作为 IPv6 普及前过渡技术。 核心作用：私网地址 ↔ 公网地址 转换 私网地址不能在公网路由，必须经过 NAT 转换才能上网 多台内网主机可共用一个公网IP，节省公网地址   部署位置：内网和外网之间的网关路由器&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nat地址转换">
+<meta property="og:url" content="https://yusisunren5927.github.io/2026/05/15/nat%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/index.html">
+<meta property="og:site_name" content="某贪心鬼的后花园">
+<meta property="og:description" content="NAT 网络地址转换 完整版知识点总结一、NAT 基础概念 全称：Network Address Translation 网络地址转换 产生背景：解决 IPv4 公网地址枯竭 问题，作为 IPv6 普及前过渡技术。 核心作用：私网地址 ↔ 公网地址 转换 私网地址不能在公网路由，必须经过 NAT 转换才能上网 多台内网主机可共用一个公网IP，节省公网地址   部署位置：内网和外网之间的网关路由器&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-15T08:39:04.000Z">
+<meta property="article:modified_time" content="2026-05-15T08:40:10.266Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yusisunren5927.github.io/2026/05/15/nat%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yusisunren5927.github.io/2026/05/15/nat%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/","path":"2026/05/15/nat地址转换/","title":"nat地址转换"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>nat地址转换 | 某贪心鬼的后花园</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">某贪心鬼的后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NAT-%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-%E5%AE%8C%E6%95%B4%E7%89%88%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">NAT 网络地址转换 完整版知识点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81NAT-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">一、NAT 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E7%BD%91%E5%9C%B0%E5%9D%80-%E7%A7%81%E7%BD%91%E5%9C%B0%E5%9D%80%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">公网地址 &amp; 私网地址区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81NAT-%E5%9B%9B%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">二、NAT 四大核心类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81-NAT"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 静态 NAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8A%A8%E6%80%81-NAT"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 动态 NAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-NAPT-%E7%AB%AF%E5%8F%A3%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%EF%BC%88PAT%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. NAPT 端口地址转换（PAT）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Easy-IP"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. Easy IP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81NAT-Server-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%A0%E5%B0%84%EF%BC%88%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">三、NAT Server 服务器映射（端口映射）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%90%84%E7%B1%BB-NAT-%E5%AF%B9%E6%AF%94"><span class="nav-number">1.4.</span> <span class="nav-text">四、各类 NAT 对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">五、常用配置命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E4%B8%8E%E5%BF%85%E8%AE%B0%E8%80%83%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">六、核心原理与必记考点</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/nat%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="nat地址转换 | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nat地址转换
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 16:39:04 / 修改时间：16:40:10" itemprop="dateCreated datePublished" datetime="2026-05-15T16:39:04+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="NAT-网络地址转换-完整版知识点总结"><a href="#NAT-网络地址转换-完整版知识点总结" class="headerlink" title="NAT 网络地址转换 完整版知识点总结"></a>NAT 网络地址转换 完整版知识点总结</h1><h2 id="一、NAT-基础概念"><a href="#一、NAT-基础概念" class="headerlink" title="一、NAT 基础概念"></a>一、NAT 基础概念</h2><ol>
+<li><strong>全称</strong>：Network Address Translation 网络地址转换</li>
+<li>产生背景：解决 <strong>IPv4 公网地址枯竭</strong> 问题，作为 IPv6 普及前过渡技术。</li>
+<li>核心作用：<strong>私网地址 ↔ 公网地址 转换</strong><ul>
+<li>私网地址不能在公网路由，必须经过 NAT 转换才能上网</li>
+<li>多台内网主机可<strong>共用一个公网IP</strong>，节省公网地址</li>
+</ul>
+</li>
+<li>部署位置：<strong>内网和外网之间的网关路由器&#x2F;三层交换机</strong></li>
+</ol>
+<h3 id="公网地址-私网地址区别"><a href="#公网地址-私网地址区别" class="headerlink" title="公网地址 &amp; 私网地址区别"></a>公网地址 &amp; 私网地址区别</h3><ul>
+<li><strong>公网地址</strong>：ISP 分配、全球唯一、可直接上互联网、需要付费</li>
+<li><strong>私网地址</strong>：企业&#x2F;家庭内网自用、免费、可重复使用、<strong>不能公网路由</strong></li>
+<li>NAT 就是实现：私网访问公网必须转换成公网地址</li>
+</ul>
+<h2 id="二、NAT-四大核心类型"><a href="#二、NAT-四大核心类型" class="headerlink" title="二、NAT 四大核心类型"></a>二、NAT 四大核心类型</h2><h3 id="1-静态-NAT"><a href="#1-静态-NAT" class="headerlink" title="1. 静态 NAT"></a>1. 静态 NAT</h3><ul>
+<li><strong>一对一固定映射</strong>：一个私网IP永久绑定一个公网IP</li>
+<li>特点：<ul>
+<li>固定不变，适合外网主动访问内网服务器</li>
+<li><strong>无法节省公网地址</strong>，一对一占用</li>
+</ul>
+</li>
+<li>应用场景：内网服务器对外提供服务</li>
+<li>配置命令：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nat static enable</span><br><span class="line">nat static global 公网IP inside 私网IP</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-动态-NAT"><a href="#2-动态-NAT" class="headerlink" title="2. 动态 NAT"></a>2. 动态 NAT</h3><ul>
+<li>基于<strong>公网地址池</strong>，私网用户上网随机分配地址池里的公网IP</li>
+<li>特点：<ul>
+<li>用完释放，循环复用</li>
+<li>地址池耗尽时，新主机<strong>无法上网</strong></li>
+</ul>
+</li>
+<li>可加参数 <code>no-pat</code>：只换IP、<strong>不转换端口</strong></li>
+</ul>
+<h3 id="3-NAPT-端口地址转换（PAT）"><a href="#3-NAPT-端口地址转换（PAT）" class="headerlink" title="3. NAPT 端口地址转换（PAT）"></a>3. NAPT 端口地址转换（PAT）</h3><ul>
+<li><strong>多对一</strong>：多个私网IP共用<strong>同一个公网IP</strong>，靠<strong>不同端口</strong>区分</li>
+<li>原理：IP相同、端口不同，实现多主机同时上网</li>
+<li>企业、家庭最常用，极大节省公网地址</li>
+</ul>
+<h3 id="4-Easy-IP"><a href="#4-Easy-IP" class="headerlink" title="4. Easy IP"></a>4. Easy IP</h3><ul>
+<li>属于 NAPT 的简化版</li>
+<li>直接借用<strong>外网物理接口自身的公网IP</strong>，不用创建地址池</li>
+<li>适用：家庭、小型办公、拨号动态获取公网IP场景</li>
+<li>配置：接口下直接绑定 ACL 即可</li>
+</ul>
+<h2 id="三、NAT-Server-服务器映射（端口映射）"><a href="#三、NAT-Server-服务器映射（端口映射）" class="headerlink" title="三、NAT Server 服务器映射（端口映射）"></a>三、NAT Server 服务器映射（端口映射）</h2><ol>
+<li>作用：让<strong>外网主动访问内网服务器</strong></li>
+<li>原理：把「公网IP+端口」映射到「私网服务器IP+端口」</li>
+<li>也叫<strong>端口映射</strong></li>
+<li>配置命令：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nat server protocol tcp global 公网IP 公网端口 inside 私网IP 私网端口</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>特点：外网只能看到公网地址，<strong>隐藏内网真实私网地址</strong>，起到安全屏蔽作用</li>
+</ol>
+<h2 id="四、各类-NAT-对比"><a href="#四、各类-NAT-对比" class="headerlink" title="四、各类 NAT 对比"></a>四、各类 NAT 对比</h2><ol>
+<li><strong>静态NAT</strong>：一对一、固定映射、适合服务器发布</li>
+<li><strong>动态NAT</strong>：地址池随机分配、无端口转换、地址池满就断网</li>
+<li><strong>NAPT</strong>：多对一、端口区分、最省公网地址</li>
+<li><strong>Easy IP</strong>：借用接口IP、无需地址池、适合小型网络</li>
+<li><strong>NAT Server</strong>：端口映射，外网访问内网专用</li>
+</ol>
+<h2 id="五、常用配置命令"><a href="#五、常用配置命令" class="headerlink" title="五、常用配置命令"></a>五、常用配置命令</h2><ol>
+<li>查看静态NAT：<code>display nat static</code></li>
+<li>查看地址池：<code>display nat address-group</code></li>
+<li>查看出站NAT：<code>display nat outbound</code></li>
+<li>查看NAT服务器映射：<code>display nat server</code></li>
+</ol>
+<h2 id="六、核心原理与必记考点"><a href="#六、核心原理与必记考点" class="headerlink" title="六、核心原理与必记考点"></a>六、核心原理与必记考点</h2><ol>
+<li>没有 NAT：内网可以主动发往外网，但外网<strong>无法回包</strong>，路由找不到内网主机</li>
+<li>NAT 天然<strong>隐藏内网拓扑和私网地址</strong>，有基础安全防护</li>
+<li>动态NAT：地址池地址用完，新主机只能等释放后才能上网</li>
+<li>NAPT vs Easy IP<ul>
+<li>NAPT：需要配置<strong>公网地址池</strong></li>
+<li>Easy IP：不用地址池，直接用<strong>外网接口IP</strong></li>
+</ul>
+</li>
+<li>所有源NAT都在<strong>外网出接口</strong>配置</li>
+<li>静态NAT、NAT Server 支持外网主动访问内网；普通NAPT&#x2F;Easy IP 默认外网无法主动访问内网</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/15/acl/" rel="prev" title="acl">
+                  <i class="fa fa-angle-left"></i> acl
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/05/15/ppp/" rel="next" title="ppp">
+                  ppp <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

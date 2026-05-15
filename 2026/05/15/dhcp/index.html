@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yusisunren5927.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="一、DHCP 基础概述 全称：Dynamic Host Configure Protocol 动态主机配置协议 由 BOOTP 协议发展而来，应用层协议，基于 UDP 封装 端口号： 客户端：68 服务器：67   作用：自动给终端分配 IP、子网掩码、网关、DNS 等参数 分配的IP带有租期，不是永久使用 DHCP 客户端请求默认以广播发送  二、DHCP 网络组成角色 DHCP Client">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dhcp">
+<meta property="og:url" content="https://yusisunren5927.github.io/2026/05/15/dhcp/index.html">
+<meta property="og:site_name" content="某贪心鬼的后花园">
+<meta property="og:description" content="一、DHCP 基础概述 全称：Dynamic Host Configure Protocol 动态主机配置协议 由 BOOTP 协议发展而来，应用层协议，基于 UDP 封装 端口号： 客户端：68 服务器：67   作用：自动给终端分配 IP、子网掩码、网关、DNS 等参数 分配的IP带有租期，不是永久使用 DHCP 客户端请求默认以广播发送  二、DHCP 网络组成角色 DHCP Client">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-15T08:36:08.000Z">
+<meta property="article:modified_time" content="2026-05-15T08:37:21.281Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yusisunren5927.github.io/2026/05/15/dhcp/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yusisunren5927.github.io/2026/05/15/dhcp/","path":"2026/05/15/dhcp/","title":"dhcp"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>dhcp | 某贪心鬼的后花园</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">某贪心鬼的后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81DHCP-%E5%9F%BA%E7%A1%80%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、DHCP 基础概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81DHCP-%E7%BD%91%E7%BB%9C%E7%BB%84%E6%88%90%E8%A7%92%E8%89%B2"><span class="nav-number">2.</span> <span class="nav-text">二、DHCP 网络组成角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81DHCP-%E5%85%AD%E7%A7%8D%E6%8A%A5%E6%96%87%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">三、DHCP 六种报文类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81DHCP-%E7%BB%8F%E5%85%B8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%88%E5%9B%9B%E6%AD%A5%E6%8F%A1%E6%89%8B%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、DHCP 经典工作流程（四步握手）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81DHCP-%E7%A7%9F%E6%9C%9F%E6%9C%BA%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">五、DHCP 租期机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A7%9F%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%8850-%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">1. 租期更新（50%）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%87%8D%E7%BB%91%E5%AE%9A%EF%BC%8887-5-%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">2. 重绑定（87.5%）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9C%B0%E5%9D%80%E9%87%8A%E6%94%BE"><span class="nav-number">5.3.</span> <span class="nav-text">3. 地址释放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-APIPA-%E8%87%AA%E5%8A%A8%E7%A7%81%E6%9C%89%E5%9C%B0%E5%9D%80"><span class="nav-number">5.4.</span> <span class="nav-text">4. APIPA 自动私有地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%A7%9F%E6%9C%9F%E8%AE%BE%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="nav-number">5.5.</span> <span class="nav-text">5. 租期设置建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81DHCP-%E4%B8%A4%E7%A7%8D%E5%9C%B0%E5%9D%80%E6%B1%A0"><span class="nav-number">6.</span> <span class="nav-text">六、DHCP 两种地址池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81DHCP-%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">七、DHCP 核心配置命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8"><span class="nav-number">7.1.</span> <span class="nav-text">通用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%9C%B0%E5%9D%80%E6%B1%A0"><span class="nav-number">7.2.</span> <span class="nav-text">接口地址池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%9C%B0%E5%9D%80%E6%B1%A0"><span class="nav-number">7.3.</span> <span class="nav-text">全局地址池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%9F%E6%9C%9F%E7%89%B9%E6%AE%8A%E9%85%8D%E7%BD%AE"><span class="nav-number">7.4.</span> <span class="nav-text">租期特殊配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81PC-%E7%AB%AF%E5%B8%B8%E7%94%A8-DHCP-%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">八、PC 端常用 DHCP 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E9%87%8D%E7%82%B9%E6%98%93%E9%94%99%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">9.</span> <span class="nav-text">九、重点易错知识点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/dhcp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="dhcp | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          dhcp
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 16:36:08 / 修改时间：16:37:21" itemprop="dateCreated datePublished" datetime="2026-05-15T16:36:08+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、DHCP-基础概述"><a href="#一、DHCP-基础概述" class="headerlink" title="一、DHCP 基础概述"></a>一、DHCP 基础概述</h2><ol>
+<li><strong>全称</strong>：Dynamic Host Configure Protocol 动态主机配置协议</li>
+<li>由 BOOTP 协议发展而来，<strong>应用层协议</strong>，基于 <strong>UDP 封装</strong></li>
+<li>端口号：<ul>
+<li>客户端：<strong>68</strong></li>
+<li>服务器：<strong>67</strong></li>
+</ul>
+</li>
+<li>作用：自动给终端分配 <strong>IP、子网掩码、网关、DNS</strong> 等参数</li>
+<li>分配的IP带有<strong>租期</strong>，不是永久使用</li>
+<li>DHCP 客户端请求默认以<strong>广播</strong>发送</li>
+</ol>
+<h2 id="二、DHCP-网络组成角色"><a href="#二、DHCP-网络组成角色" class="headerlink" title="二、DHCP 网络组成角色"></a>二、DHCP 网络组成角色</h2><ol>
+<li><strong>DHCP Client 客户端</strong>：电脑、手机等需要自动获取IP的终端</li>
+<li><strong>DHCP Server 服务器</strong>：负责分配IP地址池、下发网络参数</li>
+<li><strong>DHCP Relay 中继</strong><ul>
+<li>路由器、三层交换机充当</li>
+<li>作用：<strong>跨广播域</strong>转发DHCP广播报文，让不同网段也能共用一台DHCP服务器</li>
+</ul>
+</li>
+<li>客户端与服务器<strong>不在同一广播域</strong>，必须配置DHCP中继</li>
+</ol>
+<h2 id="三、DHCP-六种报文类型"><a href="#三、DHCP-六种报文类型" class="headerlink" title="三、DHCP 六种报文类型"></a>三、DHCP 六种报文类型</h2><table>
+<thead>
+<tr>
+<th>报文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DHCP Discover</td>
+<td>客户端<strong>广播</strong>寻找DHCP服务器</td>
+</tr>
+<tr>
+<td>DHCP Offer</td>
+<td>服务器回应，携带可用IP和网络参数</td>
+</tr>
+<tr>
+<td>DHCP Request</td>
+<td>客户端广播确认选用哪个服务器的IP、申请租约&#x2F;续期</td>
+</tr>
+<tr>
+<td>DHCP ACK</td>
+<td>服务器确认分配IP、下发完整参数</td>
+</tr>
+<tr>
+<td>DHCP NAK</td>
+<td>服务器拒绝分配IP</td>
+</tr>
+<tr>
+<td>DHCP Release</td>
+<td>客户端主动释放IP地址</td>
+</tr>
+</tbody></table>
+<h2 id="四、DHCP-经典工作流程（四步握手）"><a href="#四、DHCP-经典工作流程（四步握手）" class="headerlink" title="四、DHCP 经典工作流程（四步握手）"></a>四、DHCP 经典工作流程（四步握手）</h2><p><strong>Discover（广播）→ Offer → Request（广播）→ ACK</strong></p>
+<ul>
+<li>第1、3步固定广播</li>
+<li>第2、4步可单播也可广播（教材两种说法都成立）</li>
+<li>网络中多台DHCP服务器时，<strong>谁先回复Offer，客户端就选用谁的IP</strong></li>
+</ul>
+<h2 id="五、DHCP-租期机制"><a href="#五、DHCP-租期机制" class="headerlink" title="五、DHCP 租期机制"></a>五、DHCP 租期机制</h2><h3 id="1-租期更新（50-）"><a href="#1-租期更新（50-）" class="headerlink" title="1. 租期更新（50%）"></a>1. 租期更新（50%）</h3><p>租约用到 <strong>50%</strong> 时，客户端<strong>单播</strong>向服务器发起续期请求，成功则刷新租期。</p>
+<h3 id="2-重绑定（87-5-）"><a href="#2-重绑定（87-5-）" class="headerlink" title="2. 重绑定（87.5%）"></a>2. 重绑定（87.5%）</h3><p>50%续期无响应，到 <strong>87.5%</strong> 时改为<strong>广播</strong>重新申请IP；<br>收到ACK继续用，收到NAK立即停用IP。</p>
+<h3 id="3-地址释放"><a href="#3-地址释放" class="headerlink" title="3. 地址释放"></a>3. 地址释放</h3><ul>
+<li>租期到期无续约，自动停用IP</li>
+<li>也可手动发 DHCP Release 主动释放</li>
+</ul>
+<h3 id="4-APIPA-自动私有地址"><a href="#4-APIPA-自动私有地址" class="headerlink" title="4. APIPA 自动私有地址"></a>4. APIPA 自动私有地址</h3><p>Windows 客户端获取不到DHCP地址时，自动给自己分配：<br><strong>169.254.0.0&#x2F;16</strong> 网段地址，只能同网段临时互通。</p>
+<h3 id="5-租期设置建议"><a href="#5-租期设置建议" class="headerlink" title="5. 租期设置建议"></a>5. 租期设置建议</h3><ul>
+<li><strong>短租期</strong>：机场、商场、酒店等流动用户多的场景，增加设备负担</li>
+<li><strong>长租期</strong>：家庭、企业固定终端，减轻网络负担</li>
+</ul>
+<h2 id="六、DHCP-两种地址池"><a href="#六、DHCP-两种地址池" class="headerlink" title="六、DHCP 两种地址池"></a>六、DHCP 两种地址池</h2><ol>
+<li><strong>接口地址池</strong><ul>
+<li>绑定在三层接口</li>
+<li>直接以接口IP作为用户网关</li>
+<li><strong>优先级高于全局地址池</strong></li>
+</ul>
+</li>
+<li><strong>全局地址池</strong><ul>
+<li>全局创建IP地址池，可被多个接口调用</li>
+<li>需手动配置网段、网关、DNS、租期等</li>
+</ul>
+</li>
+</ol>
+<h2 id="七、DHCP-核心配置命令"><a href="#七、DHCP-核心配置命令" class="headerlink" title="七、DHCP 核心配置命令"></a>七、DHCP 核心配置命令</h2><h3 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhcp enable   # 全局开启DHCP，默认关闭</span><br></pre></td></tr></table></figure>
+
+<h3 id="接口地址池"><a href="#接口地址池" class="headerlink" title="接口地址池"></a>接口地址池</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dhcp select interface                    # 调用接口地址池</span><br><span class="line">dhcp server dns-list 8.8.8.8             # 配置DNS</span><br><span class="line">dhcp server excluded-ip-address 10.1.1.2  # 排除不分配的IP</span><br><span class="line">dhcp server lease day 3                  # 配置租期</span><br><span class="line">dhcp server static-bind ip x.x.x.x mac xxx  # IP与MAC静态绑定</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局地址池"><a href="#全局地址池" class="headerlink" title="全局地址池"></a>全局地址池</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ip pool 池名</span><br><span class="line">network 1.1.1.0 mask 24    # 分配网段（必配）</span><br><span class="line">gateway-list 1.1.1.1       # 网关</span><br><span class="line">dns-list 8.8.8.8           # DNS</span><br><span class="line">lease day 10               # 租期</span><br><span class="line">excluded-ip-address 地址   # 排除IP</span><br><span class="line"># 接口下调用</span><br><span class="line">dhcp select global</span><br></pre></td></tr></table></figure>
+
+<h3 id="租期特殊配置"><a href="#租期特殊配置" class="headerlink" title="租期特殊配置"></a>租期特殊配置</h3><ul>
+<li><code>lease day 0 hour 0 minute 0</code> 永不超时</li>
+<li>等价简写：<code>lease unlimited</code></li>
+</ul>
+<h2 id="八、PC-端常用-DHCP-命令"><a href="#八、PC-端常用-DHCP-命令" class="headerlink" title="八、PC 端常用 DHCP 命令"></a>八、PC 端常用 DHCP 命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /release   # 主动释放IP</span><br><span class="line">ipconfig /renew     # 重新获取IP</span><br><span class="line">ipconfig /all       # 查看租期、DNS、网卡详细信息</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、重点易错知识点"><a href="#九、重点易错知识点" class="headerlink" title="九、重点易错知识点"></a>九、重点易错知识点</h2><ol>
+<li>DHCP 基于 <strong>UDP 67&#x2F;68</strong>，应用层协议</li>
+<li>跨网段必须 <strong>DHCP中继</strong></li>
+<li>接口地址池优先级 &gt; 全局地址池</li>
+<li>地址池 <strong>network 网段是必配</strong>，网关、DNS为选配</li>
+<li>可配置<strong>排除IP</strong>，预留给服务器、网关等固定设备</li>
+<li>静态IP+MAC绑定，地址永久不分配给其他人</li>
+<li>获取不到DHCP自动出 <strong>169.254.x.x</strong> 私有地址</li>
+<li>四步握手：1、3广播；2、4可单播可广播，两种教材说法都对</li>
+<li>多DHCP服务器环境，<strong>先到先得</strong>，客户端选用最先收到的Offer</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/15/stp%E6%8A%80%E6%9C%AF/" rel="prev" title="stp技术">
+                  <i class="fa fa-angle-left"></i> stp技术
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/05/15/acl/" rel="next" title="acl">
+                  acl <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
