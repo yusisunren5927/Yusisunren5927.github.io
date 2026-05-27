@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,120 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/27/%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/27/%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">配置命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-27 09:48:57 / 修改时间：09:49:10" itemprop="dateCreated datePublished" datetime="2026-05-27T09:48:57+08:00">2026-05-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>交换机配置</p>
+<p>sys</p>
+<p>sys s3900</p>
+<p>vlan 10</p>
+<p>vlan 20</p>
+<p>vlan 24</p>
+<p>int e1&#x2F;0&#x2F;2</p>
+<p>port access vlan 10</p>
+<p>q</p>
+<p>int vlanif 10</p>
+<p>ip add 10.0.10.254 24</p>
+<p>port access vlan 24</p>
+<p>q</p>
+<p>int vlanif 24</p>
+<p>ip add 11.0.0.2 24</p>
+<p>q</p>
+<p>ip route-static 0.0.0.0 0 11.0.0.1</p>
+<p>r1配置</p>
+<p>sys</p>
+<p>sys r2200</p>
+<p>int g0&#x2F;0&#x2F;1</p>
+<p>ip add 11.0.0.1 24</p>
+<p>ip route-ststic 10.0.10.0 255.255.255.0 11.0.0.2</p>
+<p>int g0&#x2F;0&#x2F;2</p>
+<p>ip add 12.0.0.1 24</p>
+<p>q</p>
+<p>ospf 1 router-id 1.1.1.1</p>
+<p>are 0</p>
+<p>network 11.0.0.0 0.0.0.255</p>
+<p>default-route-advertise</p>
+<p>network 12.0.0.0 0.0.0.255</p>
+<p>r2的相关配置</p>
+<p>int g0&#x2F;0&#x2F;1</p>
+<p>ip add 12.0.0.2 24</p>
+<p>ospf 1 router-id 2.2.2.2</p>
+<p>are 0 </p>
+<p>network 12.0.0.0 0.0.0.255</p>
+<p>network 23.0.0.0 0.0.0.255</p>
+<p>int g0&#x2F;0&#x2F;2</p>
+<p>ip add 23.0.0.2 24</p>
+<p>r3的相关配置</p>
+<p>int e0&#x2F;0</p>
+<p>ip add 23.0.0.3 24</p>
+<p>ospf 1 router-id 3.3.3.3</p>
+<p>network 23.0.0.0 0.0.0.255</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1818,117 +1932,6 @@
 <li>同广播域 &#x3D; 同VLAN，不同VLAN必须三层路由才能通信</li>
 <li>所有端口默认 PVID&#x3D;1，默认都在 VLAN1 同一广播域</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/ospf%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/15/ospf%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">ospf配置命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-15 16:26:11 / 修改时间：16:29:09" itemprop="dateCreated datePublished" datetime="2026-05-15T16:26:11+08:00">2026-05-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、常用配置命令"><a href="#一、常用配置命令" class="headerlink" title="一、常用配置命令"></a>一、常用配置命令</h2><ol>
-<li><strong>修改 OSPF 接口 DR 优先级</strong></li>
-</ol>
-<p>plaintext</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ospf dr-priority 100</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><strong>手动修改接口 OSPF 开销</strong></li>
-</ol>
-<p>plaintext</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ospf cost 10</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>开销范围：1～65535</li>
-<li>默认缺省开销为 1</li>
-</ul>
-<ol>
-<li><strong>调整带宽参考值</strong></li>
-</ol>
-<p>plaintext</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bandwidth-reference 100</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>默认：100Mbps</li>
-<li><strong>必须整个 OSPF 网络统一调整</strong>，不能单台改</li>
-</ul>
-<ol>
-<li><strong>重启 OSPF 进程</strong></li>
-</ol>
-<p>plaintext</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reset ospf process</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、OSPF-缺省路由发布"><a href="#二、OSPF-缺省路由发布" class="headerlink" title="二、OSPF 缺省路由发布"></a>二、OSPF 缺省路由发布</h2><p>plaintext</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default-route-advertise</span><br></pre></td></tr></table></figure>
-
-<p>作用：向 OSPF 域内<strong>发布缺省默认路由</strong></p>
-<h2 id="三、DR-BDR-选举规则补充"><a href="#三、DR-BDR-选举规则补充" class="headerlink" title="三、DR&#x2F;BDR 选举规则补充"></a>三、DR&#x2F;BDR 选举规则补充</h2><ul>
-<li>优先级不同：<strong>优先级越高，越优先成为 DR&#x2F;BDR</strong></li>
-<li>优先级相同：比较 <strong>Router-ID</strong></li>
-<li>重点：<strong>优先级最大，不代表一定能当上 DR&#x2F;BDR</strong>（受非抢占机制限制）</li>
-</ul>
-<h2 id="四、邻居建立关键注意点"><a href="#四、邻居建立关键注意点" class="headerlink" title="四、邻居建立关键注意点"></a>四、邻居建立关键注意点</h2><p>密码、相关认证配置、区域参数、RID 相关匹配项必须一致</p>
 
       
     </div>
