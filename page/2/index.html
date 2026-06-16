@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,153 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/%E4%BA%8C%E5%B1%82vlan%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/15/%E4%BA%8C%E5%B1%82vlan%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">二层vlan技术</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 16:31:53 / 修改时间：16:32:46" itemprop="dateCreated datePublished" datetime="2026-05-15T16:31:53+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、VLAN-产生背景"><a href="#一、VLAN-产生背景" class="headerlink" title="一、VLAN 产生背景"></a>一、VLAN 产生背景</h2><ol>
+<li>交换机<strong>默认所有接口都在 VLAN1</strong>，同属一个广播域。</li>
+<li>没划分VLAN前，所有主机同一广播域，容易产生<strong>广播风暴</strong>。</li>
+<li>无法按业务灵活隔离广播域，网络规模变大后严重影响性能。</li>
+<li>划分VLAN可以<strong>逻辑划分广播域</strong>，不用改动物理布线。</li>
+</ol>
+<h2 id="二、VLAN-核心作用与优点"><a href="#二、VLAN-核心作用与优点" class="headerlink" title="二、VLAN 核心作用与优点"></a>二、VLAN 核心作用与优点</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>把一个物理交换机，逻辑划分成多个<strong>虚拟局域网</strong></li>
+<li><strong>隔离广播域</strong>：不同VLAN二层不能直接通信，ARP无法跨VLAN传递</li>
+<li>跨VLAN通信必须借助<strong>路由器&#x2F;三层设备</strong></li>
+</ul>
+<h3 id="四大优点"><a href="#四大优点" class="headerlink" title="四大优点"></a>四大优点</h3><ol>
+<li>限制广播域范围，抑制广播风暴</li>
+<li>提升局域网安全性，不同VLAN二层隔离</li>
+<li>灵活组建虚拟工作组，不受物理位置限制</li>
+<li>简化网络运维与管理</li>
+</ol>
+<h3 id="重要区分"><a href="#重要区分" class="headerlink" title="重要区分"></a>重要区分</h3><p>划分VLAN常把每个VLAN对应一个<strong>独立子网</strong>，但<strong>VLAN ≠ 子网</strong>，只是人为搭配使用。</p>
+<h2 id="三、802-1Q-协议与帧格式"><a href="#三、802-1Q-协议与帧格式" class="headerlink" title="三、802.1Q 协议与帧格式"></a>三、802.1Q 协议与帧格式</h2><ol>
+<li><strong>IEEE 802.1Q</strong> 是VLAN官方标准</li>
+<li>在以太网帧<strong>源MAC和协议类型之间</strong>插入 <strong>4字节Tag标签</strong></li>
+<li>两种帧类型：<ul>
+<li><strong>Untagged无标记帧</strong>：原始普通帧，PC终端发出都是无标签帧</li>
+<li><strong>Tagged有标记帧</strong>：携带802.1Q标签、带VLAN ID，交换机之间转发使用</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、VLAN-三种链路-端口类型"><a href="#四、VLAN-三种链路-端口类型" class="headerlink" title="四、VLAN 三种链路&#x2F;端口类型"></a>四、VLAN 三种链路&#x2F;端口类型</h2><h3 id="1-Access-接入端口"><a href="#1-Access-接入端口" class="headerlink" title="1. Access 接入端口"></a>1. Access 接入端口</h3><ul>
+<li>用于<strong>交换机 ↔ 主机PC</strong></li>
+<li>链路只传 <strong>Untagged 帧</strong></li>
+<li>收：PC发无标签帧，交换机按接口<strong>PVID</strong>打上VLAN标签</li>
+<li>发：往外发数据前<strong>剥离标签</strong>，发给PC（PC不能识别标签）</li>
+</ul>
+<h3 id="2-Trunk-干道端口"><a href="#2-Trunk-干道端口" class="headerlink" title="2. Trunk 干道端口"></a>2. Trunk 干道端口</h3><ul>
+<li>用于<strong>交换机↔交换机、交换机↔路由器</strong></li>
+<li>允许多个VLAN通过，默认传 <strong>Tagged 帧</strong></li>
+<li>收：有标签直接保留；无标签打上端口PVID</li>
+<li>发：<strong>同PVID剥离标签，不同PVID带标签转发</strong></li>
+</ul>
+<h3 id="3-Hybrid-混杂端口"><a href="#3-Hybrid-混杂端口" class="headerlink" title="3. Hybrid 混杂端口"></a>3. Hybrid 混杂端口</h3><ul>
+<li>ENSP&#x2F;华为交换机<strong>接口默认类型就是 Hybrid</strong></li>
+<li>既能连主机、也能连交换机，兼容Access和Trunk功能</li>
+<li>可手动配置哪些VLAN带标签、哪些剥离标签，灵活性最高</li>
+</ul>
+<h2 id="五、PVID-端口默认VLAN"><a href="#五、PVID-端口默认VLAN" class="headerlink" title="五、PVID 端口默认VLAN"></a>五、PVID 端口默认VLAN</h2><ol>
+<li>PVID &#x3D; <strong>Port VLAN ID</strong> 端口缺省VLAN</li>
+<li>华为交换机所有接口<strong>默认PVID&#x3D;1</strong></li>
+<li>作用：端口收到<strong>无标签帧</strong>时，自动打上该端口PVID对应的VLAN标签</li>
+</ol>
+<h2 id="六、三种端口核心转发规则"><a href="#六、三种端口核心转发规则" class="headerlink" title="六、三种端口核心转发规则"></a>六、三种端口核心转发规则</h2><h3 id="Access"><a href="#Access" class="headerlink" title="Access"></a>Access</h3><ul>
+<li>入：无标签 → 打PVID标签</li>
+<li>出：同VLAN → 剥标签发给终端</li>
+</ul>
+<h3 id="Trunk"><a href="#Trunk" class="headerlink" title="Trunk"></a>Trunk</h3><ul>
+<li>入：有标签保留；无标签打PVID</li>
+<li>出：VLAN和PVID相同<strong>剥标签</strong>，不同则<strong>带标签转发</strong></li>
+</ul>
+<h3 id="通用口诀"><a href="#通用口诀" class="headerlink" title="通用口诀"></a>通用口诀</h3><p><strong>入帧：有标留标，无标打PVID</strong><br><strong>出帧：同PVID剥标，异PVID带标</strong></p>
+<h2 id="七、报文处理流程"><a href="#七、报文处理流程" class="headerlink" title="七、报文处理流程"></a>七、报文处理流程</h2><p>交换机收到以太网帧：</p>
+<ol>
+<li>判断是否带Tag</li>
+<li>无Tag → 打上接口PVID</li>
+<li>检查交换机是否存在该VLAN，不存在直接丢弃</li>
+<li>检查出接口是否允许该VLAN通过</li>
+<li>允许则按端口类型做<strong>标签保留&#x2F;剥离</strong>后转发</li>
+</ol>
+<h2 id="八、基础配置要点"><a href="#八、基础配置要点" class="headerlink" title="八、基础配置要点"></a>八、基础配置要点</h2><ol>
+<li>华为&#x2F;ENSP 交换机接口<strong>默认端口类型：Hybrid</strong></li>
+<li>修改端口类型命令：<code>port link-type access/trunk/hybrid</code></li>
+<li>可单独修改接口 PVID，控制默认所属VLAN</li>
+</ol>
+<h2 id="九、核心必记知识点"><a href="#九、核心必记知识点" class="headerlink" title="九、核心必记知识点"></a>九、核心必记知识点</h2><ol>
+<li>VLAN 隔离<strong>二层广播域</strong>，不同VLAN默认无法二层互通</li>
+<li>PC 只能收发<strong>无标签帧</strong>，标签由交换机内部添加和剥离</li>
+<li>Access 接终端、Trunk 接交换机、Hybrid 万能兼容</li>
+<li>同广播域 &#x3D; 同VLAN，不同VLAN必须三层路由才能通信</li>
+<li>所有端口默认 PVID&#x3D;1，默认都在 VLAN1 同一广播域</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
