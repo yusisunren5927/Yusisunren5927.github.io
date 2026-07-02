@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,138 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/vlan%E9%97%B4%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/15/vlan%E9%97%B4%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">vlan间路由</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 16:33:10 / 修改时间：16:34:28" itemprop="dateCreated datePublished" datetime="2026-05-15T16:33:10+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、VLAN间路由基础原理"><a href="#一、VLAN间路由基础原理" class="headerlink" title="一、VLAN间路由基础原理"></a>一、VLAN间路由基础原理</h2><ol>
+<li>每个VLAN都是<strong>独立广播域、独立子网</strong>，<strong>二层天然隔离</strong>，不同VLAN主机不能直接二层互通。</li>
+<li>普通二层交换机无法跨VLAN转发，<strong>必须依靠路由技术</strong>才能实现VLAN间通信。</li>
+<li>路由器<strong>不能识别二层VLAN标签</strong>，需要特殊配置才能处理带Tag的数据帧。</li>
+<li>实现VLAN间路由两种主流方式：<ul>
+<li>路由器+二层交换机（物理多接口、单臂路由）</li>
+<li><strong>三层交换机</strong>（VLANIF 虚接口路由）</li>
+</ul>
+</li>
+</ol>
+<h2 id="二、VLAN间通信三种实现方式"><a href="#二、VLAN间通信三种实现方式" class="headerlink" title="二、VLAN间通信三种实现方式"></a>二、VLAN间通信三种实现方式</h2><h3 id="1-多物理接口路由（老式方式）"><a href="#1-多物理接口路由（老式方式）" class="headerlink" title="1. 多物理接口路由（老式方式）"></a>1. 多物理接口路由（老式方式）</h3><ul>
+<li>每个VLAN单独用<strong>一条物理链路</strong>连接路由器一个物理接口</li>
+<li>缺点：浪费路由器接口，VLAN多了不够用，基本不实用</li>
+</ul>
+<h3 id="2-单臂路由（子接口路由）"><a href="#2-单臂路由（子接口路由）" class="headerlink" title="2. 单臂路由（子接口路由）"></a>2. 单臂路由（子接口路由）</h3><ul>
+<li>交换机与路由器互联链路配置为 <strong>Trunk</strong>，允许多个VLAN带标签通过。</li>
+<li>路由器<strong>一个物理接口划分多个子接口</strong>，一个子接口对应一个VLAN。</li>
+<li>子接口终结802.1Q标签，充当对应VLAN的<strong>网关</strong>。</li>
+<li>子接口数量 &#x3D; 业务VLAN数量；VLAN总范围0~4095（4096个，2的12次方）。</li>
+</ul>
+<h3 id="3-三层交换机-MLS-路由"><a href="#3-三层交换机-MLS-路由" class="headerlink" title="3. 三层交换机 MLS 路由"></a>3. 三层交换机 MLS 路由</h3><ul>
+<li>三层交换机自带路由功能，无需外接路由器。</li>
+<li>通过创建 <strong>VLANIF 虚拟接口</strong> 作为各VLAN网关，实现三层互通。</li>
+<li>转发效率远高于单臂路由，企业网主流方案。</li>
+</ul>
+<h2 id="三、单臂路由核心配置与命令"><a href="#三、单臂路由核心配置与命令" class="headerlink" title="三、单臂路由核心配置与命令"></a>三、单臂路由核心配置与命令</h2><ol>
+<li>子接口绑定VLAN、终结标签</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dot1q termination vid 10</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>开启子接口ARP广播（默认关闭，必须配置否则无法正常通信）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp broadcast enable</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>子接口配置IP地址，作为该VLAN网关</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip address 192.168.2.254 255.255.24</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>重点：子接口必须<strong>绑定对应VLAN</strong>才能正常转发流量。</p>
+</blockquote>
+<h2 id="四、三层交换机关键知识点-命令"><a href="#四、三层交换机关键知识点-命令" class="headerlink" title="四、三层交换机关键知识点 &amp; 命令"></a>四、三层交换机关键知识点 &amp; 命令</h2><ol>
+<li>创建VLAN虚拟接口，做网关</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface vlanif 10</span><br></pre></td></tr></table></figure>
+<p>要求：VLANIF编号<strong>必须和已存在的VLAN编号一致</strong>。</p>
+<ol start="2">
+<li>接口二层&#x2F;三层模式切换</li>
+</ol>
+<ul>
+<li>设为二层接口：<code>portswitch</code></li>
+<li>设为三层接口：<code>undo portswitch</code></li>
+</ul>
+<ol start="3">
+<li>原理理解<br>  三层交换机 &#x3D; 二层交换 + 内置路由功能，内部可直接完成VLAN间三层转发，不用外接路由器。</li>
+</ol>
+<h2 id="五、核心必记考点"><a href="#五、核心必记考点" class="headerlink" title="五、核心必记考点"></a>五、核心必记考点</h2><ol>
+<li>不同VLAN<strong>二层隔离</strong>，必须三层路由才能互通。</li>
+<li>路由器不认VLAN标签，靠<strong>子接口dot1q终结</strong>解析标签。</li>
+<li>单臂路由：一条物理链路、多个子接口、一个子接口对应一个VLAN网关。</li>
+<li>子接口默认无ARP广播，必须手动开启 <code>arp broadcast enable</code>。</li>
+<li>三层交换机用 <strong>VLANIF 虚接口</strong> 实现VLAN间路由，是现网主流。</li>
+<li>VLAN总数最大 4096 个，由12位二进制决定。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1789,89 +1921,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/13/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/13/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-05-13 17:04:14" itemprop="dateCreated datePublished" datetime="2026-05-13T17:04:14+08:00">2026-05-13</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

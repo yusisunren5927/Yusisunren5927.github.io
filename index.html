@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,182 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/07/02/linux%E5%91%BD%E4%BB%A4%E9%9B%86%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/07/02/linux%E5%91%BD%E4%BB%A4%E9%9B%86%E5%90%88/" class="post-title-link" itemprop="url">linux命令集合</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-07-02 10:14:53 / 修改时间：10:15:52" itemprop="dateCreated datePublished" datetime="2026-07-02T10:14:53+08:00">2026-07-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第一章-openEuler-系统安装与基础环境命令"><a href="#第一章-openEuler-系统安装与基础环境命令" class="headerlink" title="第一章 openEuler 系统安装与基础环境命令"></a>第一章 openEuler 系统安装与基础环境命令</h2><h3 id="一、虚拟机-系统安装相关"><a href="#一、虚拟机-系统安装相关" class="headerlink" title="一、虚拟机 &amp; 系统安装相关"></a>一、虚拟机 &amp; 系统安装相关</h3><ol>
+<li><strong>vmware 操作无命令，仅系统内硬件查看</strong></li>
+</ol>
+<p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 查看服务器硬件CPU、内存</span><br><span class="line">lscpu          # 查看CPU架构、核心数（适配鲲鹏/x86/RISC-V多样性算力）</span><br><span class="line">free -h         # 人性化显示内存、交换分区</span><br><span class="line">df -h           # 查看磁盘分区占用</span><br><span class="line">lsblk           # 树形展示所有磁盘、分区</span><br><span class="line">blkid           # 查看分区UUID、文件系统类型</span><br></pre></td></tr></table></figure>
+
+<h4 id="注释-场景"><a href="#注释-场景" class="headerlink" title="注释 &amp; 场景"></a>注释 &amp; 场景</h4><ul>
+<li><code>lscpu</code>：国产化服务器选型、鲲鹏硬件兼容性排查</li>
+<li><code>free -h</code>：服务器负载监控，判断内存是否不足</li>
+<li><code>lsblk/blkid</code>：新增硬盘、挂载分区时查看设备标识</li>
+</ul>
+<h3 id="二、YUM-DNF-软件包管理（openEuler-默认包管理器）"><a href="#二、YUM-DNF-软件包管理（openEuler-默认包管理器）" class="headerlink" title="二、YUM&#x2F;DNF 软件包管理（openEuler 默认包管理器）"></a>二、YUM&#x2F;DNF 软件包管理（openEuler 默认包管理器）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># 1. 查看repo仓库配置</span><br><span class="line">cd /etc/yum.repos.d</span><br><span class="line">ls</span><br><span class="line">cat openEuler.repo</span><br><span class="line"># 注释：openEuler官方源，分OS/everything/EPOL/update等仓库段</span><br><span class="line"></span><br><span class="line"># 2. 搜索软件包</span><br><span class="line">yum search 软件名</span><br><span class="line"># 示例：yum search firefox</span><br><span class="line"># 场景：不确定包全名时检索</span><br><span class="line"></span><br><span class="line"># 3. 安装软件（自动解决依赖）</span><br><span class="line">yum install 包名 [-y]</span><br><span class="line"># -y：自动确认所有提示，脚本批量部署常用</span><br><span class="line"># 示例：yum -y install vim net-tools gcc</span><br><span class="line"></span><br><span class="line"># 4. 升级软件/全系统更新</span><br><span class="line">yum update 包名 -y    # 单个软件升级</span><br><span class="line">yum update -y          # 全系统补丁更新（生产定期安全修复）</span><br><span class="line"></span><br><span class="line"># 5. 卸载软件</span><br><span class="line">yum remove 包名 [-y]</span><br><span class="line"></span><br><span class="line"># 6. 构建本地离线YUM仓库（无网络环境）</span><br><span class="line"># ①备份原有在线源</span><br><span class="line">tar -zcf repo.tar.gz *.repo</span><br><span class="line">rm -rf *.repo</span><br><span class="line"># ②创建本地repo配置</span><br><span class="line">vi local.repo</span><br><span class="line">[local]</span><br><span class="line">name=local yum</span><br><span class="line">baseurl=file:///mnt/cdrom</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line"># ③挂载系统ISO光盘</span><br><span class="line">mkdir /mnt/cdrom</span><br><span class="line">mount /dev/sr0 /mnt/cdrom</span><br><span class="line"># ④生成缓存索引</span><br><span class="line">yum makecache</span><br><span class="line"># 场景：内网服务器、离线国产化机房部署</span><br><span class="line"></span><br><span class="line"># 7. rpm底层包管理（yum无法自动依赖时手动处理）</span><br><span class="line">rpm -ivh 包.rpm      # 安装rpm包（不会自动解决依赖）</span><br><span class="line">rpm -qa              # 列出系统全部已装软件</span><br><span class="line">rpm -qi 包名         # 查看软件描述信息</span><br><span class="line">rpm -qf /usr/bin/ls # 查询文件归属哪个rpm包</span><br><span class="line">rpm -e 包名          # 卸载rpm包</span><br><span class="line">rpm -qpR 包.rpm      # 查看离线包依赖列表</span><br><span class="line"># 场景：离线下载rpm包手动安装、排查依赖缺失</span><br><span class="line">dnf download --resolve nginx  # 一键下载软件+全部依赖rpm包</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、远程连接相关"><a href="#三、远程连接相关" class="headerlink" title="三、远程连接相关"></a>三、远程连接相关</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 网卡配置（openEuler网络文件：/etc/sysconfig/network-scripts/ifcfg-ens33）</span><br><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"># 修改BOOTPROTO=static、ONBOOT=yes，添加IPADDR/GATEWAY/DNS</span><br><span class="line"></span><br><span class="line"># 重启网络服务（两种方案）</span><br><span class="line">systemctl restart NetworkManager  # openEuler新版推荐，兼容所有网卡</span><br><span class="line">systemctl restart network         # 老CentOS兼容，新版易报错Unit not found</span><br><span class="line"></span><br><span class="line"># 查看网卡IP</span><br><span class="line">ip addr</span><br><span class="line"># 兼容老命令（需安装net-tools）</span><br><span class="line">yum -y install net-tools</span><br><span class="line">ifconfig</span><br><span class="line"># 场景：MobaXterm/Xshell远程连接失败排查IP、网段冲突</span><br></pre></td></tr></table></figure>
+
+<h2 id="第二章-Linux-基础通用命令（文件、进程、系统、工具）"><a href="#第二章-Linux-基础通用命令（文件、进程、系统、工具）" class="headerlink" title="第二章 Linux 基础通用命令（文件、进程、系统、工具）"></a>第二章 Linux 基础通用命令（文件、进程、系统、工具）</h2><h3 id="一、目录路径操作（pwd-cd-ls）"><a href="#一、目录路径操作（pwd-cd-ls）" class="headerlink" title="一、目录路径操作（pwd&#x2F;cd&#x2F;ls）"></a>一、目录路径操作（pwd&#x2F;cd&#x2F;ls）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 1. pwd 显示当前绝对路径</span><br><span class="line">pwd</span><br><span class="line"># 场景：分不清当前所在目录时使用</span><br><span class="line"></span><br><span class="line"># 2. cd 切换目录</span><br><span class="line">cd /etc        # 绝对路径切换</span><br><span class="line">cd tmp          # 相对路径</span><br><span class="line">cd ..           # 上级目录</span><br><span class="line">cd ~            # 回到当前用户家目录</span><br><span class="line">cd -            # 切换回上一次所在目录</span><br><span class="line"></span><br><span class="line"># 3. ls 列出目录内容</span><br><span class="line">ls              # 平铺文件名</span><br><span class="line">ls -l / ll       # 详细权限、所有者、大小、时间</span><br><span class="line">ls -a            # 显示隐藏文件（.开头）</span><br><span class="line">ls -lh           # 人性化单位显示文件大小(K/M/G)</span><br><span class="line">ls -ld 目录      # 只查看目录自身属性，不展示内部文件</span><br><span class="line"># 注释：ll是系统别名，openEuler默认支持</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、文件浏览（cat-tac-more-less-head-tail）"><a href="#二、文件浏览（cat-tac-more-less-head-tail）" class="headerlink" title="二、文件浏览（cat&#x2F;tac&#x2F;more&#x2F;less&#x2F;head&#x2F;tail）"></a>二、文件浏览（cat&#x2F;tac&#x2F;more&#x2F;less&#x2F;head&#x2F;tail）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat 文件名        # 一次性输出全部内容，适合小文件</span><br><span class="line">cat -n 文件名     # 带行号展示</span><br><span class="line">tac 文件名        # 倒序反向输出文件</span><br><span class="line">more 文件名       # 分页，仅能向下翻（空格翻页，q退出）</span><br><span class="line">less 文件名       # 双向分页，支持上下翻、关键词搜索 /关键词</span><br><span class="line">head -7 文件      # 查看前7行，默认前10行</span><br><span class="line">tail -f /var/log/messages # 实时滚动监控日志（运维核心）</span><br><span class="line">tail -n 20 文件   # 查看末尾20行</span><br><span class="line"># 场景：日志排查、配置文件查看</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、文件-目录增删改（mkdir-rmdir-cp-mv-rm-touch）"><a href="#三、文件-目录增删改（mkdir-rmdir-cp-mv-rm-touch）" class="headerlink" title="三、文件 &#x2F; 目录增删改（mkdir&#x2F;rmdir&#x2F;cp&#x2F;mv&#x2F;rm&#x2F;touch）"></a>三、文件 &#x2F; 目录增删改（mkdir&#x2F;rmdir&#x2F;cp&#x2F;mv&#x2F;rm&#x2F;touch）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># mkdir 创建目录</span><br><span class="line">mkdir test</span><br><span class="line">mkdir -p /tmp/a/b/c # 递归多层创建目录</span><br><span class="line"></span><br><span class="line"># rmdir 删除空目录</span><br><span class="line">rmdir test</span><br><span class="line"></span><br><span class="line"># cp 复制</span><br><span class="line">cp file1 /tmp       # 复制文件</span><br><span class="line">cp -r dir /tmp      # 递归复制目录(-r必须)</span><br><span class="line">cp -p file /tmp     # 复制保留原权限、修改时间</span><br><span class="line"></span><br><span class="line"># mv 移动/重命名</span><br><span class="line">mv file /tmp        # 剪切到其他目录</span><br><span class="line">mv old new          # 同目录下=改名</span><br><span class="line"></span><br><span class="line"># rm 删除（无回收站，谨慎）</span><br><span class="line">rm file</span><br><span class="line">rm -rf 目录         # 强制递归删除目录，高危操作</span><br><span class="line"></span><br><span class="line"># touch 创建空文件/修改文件时间</span><br><span class="line">touch test.txt</span><br><span class="line">touch -d &quot;2025-01-01&quot; test.txt # 修改文件修改时间</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、查找命令（find-locate-whereis）"><a href="#四、查找命令（find-locate-whereis）" class="headerlink" title="四、查找命令（find&#x2F;locate&#x2F;whereis）"></a>四、查找命令（find&#x2F;locate&#x2F;whereis）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># find 实时全盘搜索（精准，速度慢）</span><br><span class="line">find /etc -name &quot;*.conf&quot;       # /etc下所有conf文件</span><br><span class="line">find . -type f                 # 当前目录所有普通文件</span><br><span class="line">find / -size +100M 2&gt;/dev/null # 根目录大于100M文件，屏蔽报错</span><br><span class="line">find . -mmin -30               # 30分钟内修改的文件</span><br><span class="line"></span><br><span class="line"># locate 数据库检索（速度快，需更新库）</span><br><span class="line">updatedb         # 更新文件索引库</span><br><span class="line">locate test.txt</span><br><span class="line"></span><br><span class="line"># whereis 查询命令二进制、帮助文档路径</span><br><span class="line">whereis ls</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、文本检索-grep"><a href="#五、文本检索-grep" class="headerlink" title="五、文本检索 grep"></a>五、文本检索 grep</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;关键词&quot; 文件</span><br><span class="line">grep -i &quot;关键词&quot; 文件  # 忽略大小写</span><br><span class="line">grep -v &quot;#&quot; /etc/fstab # 过滤掉#注释行</span><br><span class="line">grep -n &quot;root&quot; /etc/passwd # 匹配行带行号</span><br><span class="line"># 管道组合示例：rpm -qa | grep nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="六、系统信息命令"><a href="#六、系统信息命令" class="headerlink" title="六、系统信息命令"></a>六、系统信息命令</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 时间日期</span><br><span class="line">date                    # 查看当前系统时间</span><br><span class="line">date &quot;+%Y-%m-%d %H:%M:%S&quot; # 自定义格式化输出</span><br><span class="line">date -s &quot;2026-01-01 12:00:00&quot; # 设置系统时间（root）</span><br><span class="line">hwclock -w              # 系统时间写入硬件BIOS时钟</span><br><span class="line">hwclock -s              # 硬件时间同步到系统</span><br><span class="line">ntpdate ntp.aliyun.com  # 网络同步时间（服务器校准）</span><br><span class="line">cal 2026                # 查看全年日历</span><br><span class="line"></span><br><span class="line"># 系统版本、内核</span><br><span class="line">uname -a                # 完整内核、架构信息</span><br><span class="line">uname -r                # 仅显示内核版本</span><br><span class="line"></span><br><span class="line"># 开机硬件日志</span><br><span class="line">dmesg | less            # 查看开机硬件识别、报错</span><br><span class="line"></span><br><span class="line"># 磁盘占用</span><br><span class="line">df -h                   # 挂载分区使用</span><br><span class="line">du -sh /var/log         # 统计目录总大小</span><br></pre></td></tr></table></figure>
+
+<h3 id="七、进程管理（ps-top-pidof-kill-killall-nice-renice）"><a href="#七、进程管理（ps-top-pidof-kill-killall-nice-renice）" class="headerlink" title="七、进程管理（ps&#x2F;top&#x2F;pidof&#x2F;kill&#x2F;killall&#x2F;nice&#x2F;renice）"></a>七、进程管理（ps&#x2F;top&#x2F;pidof&#x2F;kill&#x2F;killall&#x2F;nice&#x2F;renice）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ps -aux                 # 查看全部进程</span><br><span class="line">ps -ef                  # 树形进程关系</span><br><span class="line">top                     # 实时进程监视器（服务器负载监控）</span><br><span class="line">pidof sshd              # 获取进程PID号</span><br><span class="line">kill 1234               # 正常终止进程(信号15)</span><br><span class="line">kill -9 1234            # 强制杀死进程（慎用）</span><br><span class="line">killall nginx           # 按进程名批量杀死</span><br><span class="line">nice -n -5 ./test       # 启动程序时调低优先级（数字越小优先级越高）</span><br><span class="line">renice 5 -p 1234        # 修改运行进程优先级</span><br></pre></td></tr></table></figure>
+
+<h3 id="八、系统开关机-用户会话"><a href="#八、系统开关机-用户会话" class="headerlink" title="八、系统开关机 &amp; 用户会话"></a>八、系统开关机 &amp; 用户会话</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">shutdown -h now         # 立即关机</span><br><span class="line">shutdown -r 10 &quot;10分钟后重启&quot;</span><br><span class="line">reboot                  # 重启</span><br><span class="line">halt                    # 停机不切断电源</span><br><span class="line">poweroff                # 关机断电</span><br><span class="line"></span><br><span class="line"># 登录用户查看</span><br><span class="line">who                     # 当前登录终端</span><br><span class="line">last                    # 全部历史登录记录</span><br></pre></td></tr></table></figure>
+
+<h3 id="九、辅助工具命令"><a href="#九、辅助工具命令" class="headerlink" title="九、辅助工具命令"></a>九、辅助工具命令</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">clear / Ctrl+L          # 清屏</span><br><span class="line">history                 # 查看执行过的历史命令</span><br><span class="line">!20                     # 执行第20条历史命令</span><br><span class="line">alias ll=&#x27;ls -l&#x27;        # 设置命令别名</span><br><span class="line">unalias ll              # 删除别名</span><br><span class="line">echo &quot;内容&quot; &gt; a.txt     # 覆盖写入文件</span><br><span class="line">echo &quot;内容&quot; &gt;&gt; a.txt    # 追加写入文件</span><br><span class="line">wget https://xxx.zip    # 网络下载文件</span><br><span class="line">dd if=/dev/zero of=test bs=1G count=1 # 生成指定大小测试文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三章-用户与组管理命令（openEuler-信创用户权限）"><a href="#第三章-用户与组管理命令（openEuler-信创用户权限）" class="headerlink" title="第三章 用户与组管理命令（openEuler 信创用户权限）"></a>第三章 用户与组管理命令（openEuler 信创用户权限）</h2><h3 id="一、用户增删改查（useradd-userdel-usermod-passwd）"><a href="#一、用户增删改查（useradd-userdel-usermod-passwd）" class="headerlink" title="一、用户增删改查（useradd&#x2F;userdel&#x2F;usermod&#x2F;passwd）"></a>一、用户增删改查（useradd&#x2F;userdel&#x2F;usermod&#x2F;passwd）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># useradd 创建普通用户</span><br><span class="line">useradd user1</span><br><span class="line">useradd -u 1005 -d /home/user1 -G wheel user2</span><br><span class="line"># -u 指定UID，-d 指定家目录，-G 附加组</span><br><span class="line"></span><br><span class="line"># passwd 设置/修改密码</span><br><span class="line">passwd user1</span><br><span class="line">echo &quot;Test@123&quot; | passwd --stdin user1 # 脚本批量设置密码</span><br><span class="line">passwd -l user1         # 锁定用户禁止登录</span><br><span class="line">passwd -u user1         # 解锁用户</span><br><span class="line">passwd -S user1         # 查看密码状态</span><br><span class="line"></span><br><span class="line"># usermod 修改已有用户属性</span><br><span class="line">usermod -G root user1   # 添加附加组</span><br><span class="line">usermod -s /sbin/nologin user1 # 禁止登录</span><br><span class="line">usermod -m -d /new/home/user1 user1 # 迁移家目录</span><br><span class="line"></span><br><span class="line"># userdel 删除用户</span><br><span class="line">userdel user1           # 仅删账号，保留家目录</span><br><span class="line">userdel -r user1        # 删除账号+家目录+邮箱</span><br><span class="line"></span><br><span class="line"># id 查看用户UID/GID/附属组</span><br><span class="line">id user1</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、用户组管理（groupadd-groupmod-groupdel-gpasswd）"><a href="#二、用户组管理（groupadd-groupmod-groupdel-gpasswd）" class="headerlink" title="二、用户组管理（groupadd&#x2F;groupmod&#x2F;groupdel&#x2F;gpasswd）"></a>二、用户组管理（groupadd&#x2F;groupmod&#x2F;groupdel&#x2F;gpasswd）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groupadd dev            # 创建用户组</span><br><span class="line">groupmod -n develop dev # 修改组名</span><br><span class="line">groupdel dev            # 删除空组（有主用户无法删除）</span><br><span class="line">gpasswd -a user1 dev    # 将用户加入组</span><br><span class="line">gpasswd -d user1 dev    # 将用户移出组</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、用户配置文件查看"><a href="#三、用户配置文件查看" class="headerlink" title="三、用户配置文件查看"></a>三、用户配置文件查看</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd  # 用户基础信息（7段分隔）</span><br><span class="line">cat /etc/shadow  # 加密密码（仅root可读）</span><br><span class="line">cat /etc/group   # 用户组信息</span><br><span class="line">cat /etc/gshadow # 组密码文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、切换用户-su-sudo-权限"><a href="#四、切换用户-su-sudo-权限" class="headerlink" title="四、切换用户 su &amp; sudo 权限"></a>四、切换用户 su &amp; sudo 权限</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su user1                # 切换用户，环境变量不变</span><br><span class="line">su - user1              # 完整切换，加载用户环境变量（推荐）</span><br><span class="line">visudo                  # 编辑sudo授权配置（禁止vim直接改/etc/sudoers）</span><br><span class="line"># 示例授权：user1 ALL=(ALL) ALL</span><br><span class="line">gpasswd -a user1 wheel  # 加入wheel组获得root权限</span><br></pre></td></tr></table></figure>
+
+<h2 id="第四章-文件权限、特殊权限、ACL"><a href="#第四章-文件权限、特殊权限、ACL" class="headerlink" title="第四章 文件权限、特殊权限、ACL"></a>第四章 文件权限、特殊权限、ACL</h2><h3 id="一、基础权限-chmod-chown-chgrp"><a href="#一、基础权限-chmod-chown-chgrp" class="headerlink" title="一、基础权限 chmod&#x2F;chown&#x2F;chgrp"></a>一、基础权限 chmod&#x2F;chown&#x2F;chgrp</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># chmod 修改读写执行权限</span><br><span class="line">chmod 755 test.sh</span><br><span class="line">chmod u+x test.sh       # 所有者增加执行权限</span><br><span class="line">chmod g-w test.sh       # 组删除写权限</span><br><span class="line">chmod -R 777 /tmp/test  # 递归修改目录下所有文件权限</span><br><span class="line"></span><br><span class="line"># chown 修改文件所有者</span><br><span class="line">chown root:root test</span><br><span class="line">chown -R user1 /data    # 递归修改归属</span><br><span class="line"></span><br><span class="line"># chgrp 修改文件所属组</span><br><span class="line">chgrp dev test</span><br></pre></td></tr></table></figure>
+
+<p>权限数值说明：r&#x3D;4 w&#x3D;2 x&#x3D;1，7&#x3D;rwx 6&#x3D;rw 5&#x3D;rx 4&#x3D;r</p>
+<h3 id="二、隐藏属性-chattr-lsattr（日志防删除）"><a href="#二、隐藏属性-chattr-lsattr（日志防删除）" class="headerlink" title="二、隐藏属性 chattr&#x2F;lsattr（日志防删除）"></a>二、隐藏属性 chattr&#x2F;lsattr（日志防删除）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lsattr test.log          # 查看隐藏属性</span><br><span class="line">chattr +a test.log       # 仅允许追加，不能删除/覆盖（日志专用）</span><br><span class="line">chattr +i test.conf      # 不可修改、删除、改名（关键配置保护）</span><br><span class="line">chattr -i test.conf      # 移除不可变属性</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、特殊权限-SUID-SGID-Sticky"><a href="#三、特殊权限-SUID-SGID-Sticky" class="headerlink" title="三、特殊权限 SUID&#x2F;SGID&#x2F;Sticky"></a>三、特殊权限 SUID&#x2F;SGID&#x2F;Sticky</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># SUID(4) 执行时拥有文件所有者权限</span><br><span class="line">chmod 4755 /bin/test</span><br><span class="line">chmod u+s /bin/test</span><br><span class="line"></span><br><span class="line"># SGID(2) 目录内新建文件继承目录属组</span><br><span class="line">chmod 2777 /project</span><br><span class="line">chmod g+s /project</span><br><span class="line"></span><br><span class="line"># Sticky BIT(1) 目录内仅文件所有者可删除文件（/tmp默认）</span><br><span class="line">chmod 1777 /tmp_test</span><br><span class="line">chmod o+t /tmp_test</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、ACL-细粒度权限（普通用户单独授权）"><a href="#四、ACL-细粒度权限（普通用户单独授权）" class="headerlink" title="四、ACL 细粒度权限（普通用户单独授权）"></a>四、ACL 细粒度权限（普通用户单独授权）</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setfacl -m u:user1:rwx /data # 给user1单独读写执行权限</span><br><span class="line">setfacl -R -m g:dev:rx /data # 递归给dev组读执行</span><br><span class="line">getfacl /data                # 查看ACL权限</span><br><span class="line">setfacl -b /data             # 清空所有ACL规则</span><br></pre></td></tr></table></figure>
+
+<h2 id="第五章-磁盘、分区、挂载管理"><a href="#第五章-磁盘、分区、挂载管理" class="headerlink" title="第五章 磁盘、分区、挂载管理"></a>第五章 磁盘、分区、挂载管理</h2><h3 id="一、分区操作-fdisk"><a href="#一、分区操作-fdisk" class="headerlink" title="一、分区操作 fdisk"></a>一、分区操作 fdisk</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l                # 列出所有磁盘、分区</span><br><span class="line">fdisk /dev/sdb          # 对第二块磁盘分区</span><br><span class="line"># 交互指令：n新建 p查看 d删除 w保存 q不保存</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、格式化-mkfs"><a href="#二、格式化-mkfs" class="headerlink" title="二、格式化 mkfs"></a>二、格式化 mkfs</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkfs.xfs /dev/sdb1      # 格式化为XFS（openEuler默认）</span><br><span class="line">mkfs.ext4 /dev/sdb5</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、挂载-卸载-mount-umount"><a href="#三、挂载-卸载-mount-umount" class="headerlink" title="三、挂载 &#x2F; 卸载 mount&#x2F;umount"></a>三、挂载 &#x2F; 卸载 mount&#x2F;umount</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data             # 创建挂载点</span><br><span class="line">mount /dev/sdb1 /data   # 临时挂载</span><br><span class="line">mount UUID=xxx /data    # 使用UUID挂载（稳定不随磁盘名变化）</span><br><span class="line">umount /data            # 卸载目录</span><br><span class="line">umount /dev/sdb1        # 卸载设备</span><br><span class="line"># 永久挂载：写入/etc/fstab</span><br><span class="line">vim /etc/fstab</span><br><span class="line">mount -a                # 加载fstab全部挂载项</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、交换分区-swap"><a href="#四、交换分区-swap" class="headerlink" title="四、交换分区 swap"></a>四、交换分区 swap</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=/swap bs=1G count=2 # 2G交换文件</span><br><span class="line">mkswap /swap</span><br><span class="line">swapon /swap            # 启用swap</span><br><span class="line">swapoff /swap           # 关闭swap</span><br><span class="line">free -m                 # 查看swap使用</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、磁盘修复、空间统计"><a href="#五、磁盘修复、空间统计" class="headerlink" title="五、磁盘修复、空间统计"></a>五、磁盘修复、空间统计</h3><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fsck /dev/sdb1          # 文件系统修复（必须先卸载）</span><br><span class="line">du -h /home             # 目录占用</span><br><span class="line">df -i                   # 查看inode使用量（inode满无法新建文件）﻿</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1781,140 +1957,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/vlan%E9%97%B4%E8%B7%AF%E7%94%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/15/vlan%E9%97%B4%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">vlan间路由</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-15 16:33:10 / 修改时间：16:34:28" itemprop="dateCreated datePublished" datetime="2026-05-15T16:33:10+08:00">2026-05-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、VLAN间路由基础原理"><a href="#一、VLAN间路由基础原理" class="headerlink" title="一、VLAN间路由基础原理"></a>一、VLAN间路由基础原理</h2><ol>
-<li>每个VLAN都是<strong>独立广播域、独立子网</strong>，<strong>二层天然隔离</strong>，不同VLAN主机不能直接二层互通。</li>
-<li>普通二层交换机无法跨VLAN转发，<strong>必须依靠路由技术</strong>才能实现VLAN间通信。</li>
-<li>路由器<strong>不能识别二层VLAN标签</strong>，需要特殊配置才能处理带Tag的数据帧。</li>
-<li>实现VLAN间路由两种主流方式：<ul>
-<li>路由器+二层交换机（物理多接口、单臂路由）</li>
-<li><strong>三层交换机</strong>（VLANIF 虚接口路由）</li>
-</ul>
-</li>
-</ol>
-<h2 id="二、VLAN间通信三种实现方式"><a href="#二、VLAN间通信三种实现方式" class="headerlink" title="二、VLAN间通信三种实现方式"></a>二、VLAN间通信三种实现方式</h2><h3 id="1-多物理接口路由（老式方式）"><a href="#1-多物理接口路由（老式方式）" class="headerlink" title="1. 多物理接口路由（老式方式）"></a>1. 多物理接口路由（老式方式）</h3><ul>
-<li>每个VLAN单独用<strong>一条物理链路</strong>连接路由器一个物理接口</li>
-<li>缺点：浪费路由器接口，VLAN多了不够用，基本不实用</li>
-</ul>
-<h3 id="2-单臂路由（子接口路由）"><a href="#2-单臂路由（子接口路由）" class="headerlink" title="2. 单臂路由（子接口路由）"></a>2. 单臂路由（子接口路由）</h3><ul>
-<li>交换机与路由器互联链路配置为 <strong>Trunk</strong>，允许多个VLAN带标签通过。</li>
-<li>路由器<strong>一个物理接口划分多个子接口</strong>，一个子接口对应一个VLAN。</li>
-<li>子接口终结802.1Q标签，充当对应VLAN的<strong>网关</strong>。</li>
-<li>子接口数量 &#x3D; 业务VLAN数量；VLAN总范围0~4095（4096个，2的12次方）。</li>
-</ul>
-<h3 id="3-三层交换机-MLS-路由"><a href="#3-三层交换机-MLS-路由" class="headerlink" title="3. 三层交换机 MLS 路由"></a>3. 三层交换机 MLS 路由</h3><ul>
-<li>三层交换机自带路由功能，无需外接路由器。</li>
-<li>通过创建 <strong>VLANIF 虚拟接口</strong> 作为各VLAN网关，实现三层互通。</li>
-<li>转发效率远高于单臂路由，企业网主流方案。</li>
-</ul>
-<h2 id="三、单臂路由核心配置与命令"><a href="#三、单臂路由核心配置与命令" class="headerlink" title="三、单臂路由核心配置与命令"></a>三、单臂路由核心配置与命令</h2><ol>
-<li>子接口绑定VLAN、终结标签</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dot1q termination vid 10</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>开启子接口ARP广播（默认关闭，必须配置否则无法正常通信）</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp broadcast enable</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>子接口配置IP地址，作为该VLAN网关</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip address 192.168.2.254 255.255.24</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>重点：子接口必须<strong>绑定对应VLAN</strong>才能正常转发流量。</p>
-</blockquote>
-<h2 id="四、三层交换机关键知识点-命令"><a href="#四、三层交换机关键知识点-命令" class="headerlink" title="四、三层交换机关键知识点 &amp; 命令"></a>四、三层交换机关键知识点 &amp; 命令</h2><ol>
-<li>创建VLAN虚拟接口，做网关</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface vlanif 10</span><br></pre></td></tr></table></figure>
-<p>要求：VLANIF编号<strong>必须和已存在的VLAN编号一致</strong>。</p>
-<ol start="2">
-<li>接口二层&#x2F;三层模式切换</li>
-</ol>
-<ul>
-<li>设为二层接口：<code>portswitch</code></li>
-<li>设为三层接口：<code>undo portswitch</code></li>
-</ul>
-<ol start="3">
-<li>原理理解<br>  三层交换机 &#x3D; 二层交换 + 内置路由功能，内部可直接完成VLAN间三层转发，不用外接路由器。</li>
-</ol>
-<h2 id="五、核心必记考点"><a href="#五、核心必记考点" class="headerlink" title="五、核心必记考点"></a>五、核心必记考点</h2><ol>
-<li>不同VLAN<strong>二层隔离</strong>，必须三层路由才能互通。</li>
-<li>路由器不认VLAN标签，靠<strong>子接口dot1q终结</strong>解析标签。</li>
-<li>单臂路由：一条物理链路、多个子接口、一个子接口对应一个VLAN网关。</li>
-<li>子接口默认无ARP广播，必须手动开启 <code>arp broadcast enable</code>。</li>
-<li>三层交换机用 <strong>VLANIF 虚接口</strong> 实现VLAN间路由，是现网主流。</li>
-<li>VLAN总数最大 4096 个，由12位二进制决定。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
