@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,171 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/13/ip%E5%9C%B0%E5%9D%80%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/13/ip%E5%9C%B0%E5%9D%80%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">ip地址基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-13 21:29:58 / 修改时间：22:48:49" itemprop="dateCreated datePublished" datetime="2026-05-13T21:29:58+08:00">2026-05-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、什么是-IP-地址"><a href="#一、什么是-IP-地址" class="headerlink" title="一、什么是 IP 地址"></a>一、什么是 IP 地址</h2><p>IP 全称 IP Address，是网络里每一台通信设备的唯一身份标识。</p>
+<p>IPv4 采用 <strong>32 位二进制</strong> 组成，日常用点分十进制表示<br>示例：<code>192.168.1.1/24</code></p>
+<p>IP 地址固定分成两部分：</p>
+<ul>
+<li><strong>网络位</strong>：代表属于哪一个网段</li>
+<li><strong>主机位</strong>：代表网段里的某一台具体设备</li>
+</ul>
+<p>网络位和主机位的分界线，由子网掩码决定。</p>
+<p><strong>二进制换算举例：</strong><br><code>192.168.5.1</code> 二进制：<br><code>11000000.10101000.00000101.01111011</code><br>十进制计算：<code>128+64=192</code>，就是这么换算来的。</p>
+<hr>
+<h2 id="二、子网掩码核心知识点"><a href="#二、子网掩码核心知识点" class="headerlink" title="二、子网掩码核心知识点"></a>二、子网掩码核心知识点</h2><p>子网掩码英文：Subnet Mask</p>
+<h3 id="1-作用"><a href="#1-作用" class="headerlink" title="1. 作用"></a>1. 作用</h3><p>区分 IP 地址里哪部分是网络位、哪部分是主机位。</p>
+<h3 id="2-编码规则"><a href="#2-编码规则" class="headerlink" title="2. 编码规则"></a>2. 编码规则</h3><p>二进制里：</p>
+<ul>
+<li><code>1</code> &#x3D; 网络位</li>
+<li><code>0</code> &#x3D; 主机位<br>且 <code>1</code> 和 <code>0</code> <strong>必须连续</strong>，不能打乱穿插。</li>
+</ul>
+<h3 id="3-有效主机数量计算公式"><a href="#3-有效主机数量计算公式" class="headerlink" title="3. 有效主机数量计算公式"></a>3. 有效主机数量计算公式</h3><p>可用主机地址数 &#x3D; 2^{主机位数} - 2</p>
+<blockquote>
+<p>为什么要减 2？<br>要扣除<strong>网络地址</strong>和<strong>广播地址</strong>，这两个地址不能分给电脑、手机等终端使用。</p>
+</blockquote>
+<hr>
+<h2 id="三、IP-地址-A-B-C-类分类详解"><a href="#三、IP-地址-A-B-C-类分类详解" class="headerlink" title="三、IP 地址 A&#x2F;B&#x2F;C 类分类详解"></a>三、IP 地址 A&#x2F;B&#x2F;C 类分类详解</h2><h3 id="1-地址范围划分"><a href="#1-地址范围划分" class="headerlink" title="1. 地址范围划分"></a>1. 地址范围划分</h3><ul>
+<li><strong>A 类地址</strong>：首段 1～127</li>
+<li><strong>B 类地址</strong>：首段 128～191</li>
+<li><strong>C 类地址</strong>：首段 192～223</li>
+</ul>
+<h3 id="2-默认掩码与网段数量"><a href="#2-默认掩码与网段数量" class="headerlink" title="2. 默认掩码与网段数量"></a>2. 默认掩码与网段数量</h3><ul>
+<li><strong>A 类</strong>：默认大网段，整体一个大网络</li>
+<li><strong>B 类</strong>：默认掩码 &#x2F;16，包含 16 个标准网段</li>
+<li><strong>C 类</strong>：默认掩码 &#x2F;24，网段范围 xx.xx.0 ~ xx.xx.255，一共 256 个网段</li>
+</ul>
+<h3 id="3-特殊地址：127-环回地址"><a href="#3-特殊地址：127-环回地址" class="headerlink" title="3. 特殊地址：127 环回地址"></a>3. 特殊地址：127 环回地址</h3><ul>
+<li><code>127.x.x.x</code> 属于环回虚拟接口</li>
+<li>没有网卡也能 ping 通</li>
+<li>用途：专门测试本地 TCP&#x2F;IP 协议栈是否正常工作</li>
+</ul>
+<h3 id="4-私网-公网-IPv6"><a href="#4-私网-公网-IPv6" class="headerlink" title="4. 私网 &amp; 公网 &amp; IPv6"></a>4. 私网 &amp; 公网 &amp; IPv6</h3><ul>
+<li>家里、公司内网用的都是<strong>私网地址</strong></li>
+<li>访问互联网时，私网地址会转换成<strong>公网地址</strong>上网</li>
+<li>IPv6 升级为 128 位，彻底解决 IP 地址不够用问题</li>
+</ul>
+<hr>
+<h2 id="四、为什么要做子网划分"><a href="#四、为什么要做子网划分" class="headerlink" title="四、为什么要做子网划分"></a>四、为什么要做子网划分</h2><p>传统 A&#x2F;B&#x2F;C 类大网段有很大弊端：</p>
+<ul>
+<li>IP 地址资源严重浪费</li>
+<li>一个广播域设备太多</li>
+<li>广播报文泛滥，占用大量带宽</li>
+</ul>
+<p>所以引入<strong>子网划分</strong>：向主机位借位，把一个大网段拆成多个小网段，分给不同部门使用。</p>
+<hr>
+<h2 id="五、子网划分核心原理"><a href="#五、子网划分核心原理" class="headerlink" title="五、子网划分核心原理"></a>五、子网划分核心原理</h2><ul>
+<li>从原本的主机位借出若干位，当做新的<strong>子网网络位</strong></li>
+<li>借 <code>n</code> 位：可划分出子网数量 &#x3D; 2^{n}</li>
+<li>剩余 <code>m</code> 位主机位：每个子网可用主机数 &#x3D; 2^{m} - 2</li>
+</ul>
+<hr>
+<h2 id="六、经典子网划分实战案例"><a href="#六、经典子网划分实战案例" class="headerlink" title="六、经典子网划分实战案例"></a>六、经典子网划分实战案例</h2><h3 id="案例-1：C-类地址借-2-位划分"><a href="#案例-1：C-类地址借-2-位划分" class="headerlink" title="案例 1：C 类地址借 2 位划分"></a>案例 1：C 类地址借 2 位划分</h3><p>网段 <code>192.168.1.0/24</code>，借 2 位划分子网</p>
+<ul>
+<li>子网个数：2^{2} &#x3D; 4 个</li>
+<li>剩余主机位 6 位</li>
+<li>每个子网有效主机：2^{6} - 2 &#x3D; 62 个</li>
+</ul>
+<h3 id="案例-2：-28-子网划分实操"><a href="#案例-2：-28-子网划分实操" class="headerlink" title="案例 2：&#x2F;28 子网划分实操"></a>案例 2：&#x2F;28 子网划分实操</h3><p>网段 <code>61.179.150.0</code>，掩码 &#x2F;28</p>
+<ul>
+<li>网络位 28 位，剩余主机位 4 位</li>
+<li>块大小：2^{4} &#x3D; 16</li>
+<li>就近取 16 倍数：32</li>
+<li><strong>网络地址</strong>：<code>61.179.150.32/28</code></li>
+<li><strong>广播地址</strong>：<code>61.179.150.47</code></li>
+<li><strong>有效主机范围</strong>：33 ~ 46</li>
+</ul>
+<h3 id="案例-3：-26-网段地址范围"><a href="#案例-3：-26-网段地址范围" class="headerlink" title="案例 3：&#x2F;26 网段地址范围"></a>案例 3：&#x2F;26 网段地址范围</h3><ul>
+<li><code>142.68.1.64/26</code> → 可用主机：65～126</li>
+<li><code>142.168.102.128/26</code> → 可用主机：129～190</li>
+<li><code>192.168.102.192/26</code> → 可用主机：193～254</li>
+</ul>
+<blockquote>
+<p>记住规则：子网第一个地址是网络地址，最后一个是广播地址，都不能分配给终端。</p>
+</blockquote>
+<h3 id="案例-4：大网段-11-划分"><a href="#案例-4：大网段-11-划分" class="headerlink" title="案例 4：大网段 &#x2F;11 划分"></a>案例 4：大网段 &#x2F;11 划分</h3><p>网段 <code>60.160.0.0/11</code></p>
+<ul>
+<li>第二段原有 8 位网络位，借出 3 位，剩 5 位</li>
+<li>块大小：2^{5} &#x3D; 32</li>
+<li><strong>网络地址</strong>：<code>60.160.0.0</code></li>
+<li>下一个网段起始：160 + 32 &#x3D; 192</li>
+<li>本网段广播地址：<code>60.160.191.255</code></li>
+</ul>
+<hr>
+<h2 id="七、必背核心总结"><a href="#七、必背核心总结" class="headerlink" title="七、必背核心总结"></a>七、必背核心总结</h2><ol>
+<li>IPv4 32 位二进制，分网络位 + 主机位，子网掩码 <code>1</code> 看网络、<code>0</code> 看主机；</li>
+<li>算主机地址一定要 <strong>减 2</strong>，剔除网络和广播地址；</li>
+<li>A&#x2F;B&#x2F;C 类默认掩码固定，大网段浪费严重，必须做子网划分；</li>
+<li><strong>子网划分口诀</strong>：借位划子网 → 算块大小 → 找网络地址 → 定广播范围；</li>
+<li><code>127</code> 环回地址测本地协议栈，内网用私网，上网转公网。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

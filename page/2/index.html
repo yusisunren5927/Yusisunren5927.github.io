@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,220 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/stp%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/15/stp%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">stp技术</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-15 16:34:57 / 修改时间：16:35:58" itemprop="dateCreated datePublished" datetime="2026-05-15T16:34:57+08:00">2026-05-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、STP-基础概念"><a href="#一、STP-基础概念" class="headerlink" title="一、STP 基础概念"></a>一、STP 基础概念</h2><ol>
+<li><strong>适用场景</strong>：<strong>只有二层交换机需要STP</strong>，三层设备不用。</li>
+<li>为网络做<strong>冗余备份链路</strong>，但多条链路会产生<strong>二层环路</strong>。</li>
+<li>环路带来三大危害：<ul>
+<li>广播风暴无限循环</li>
+<li>MAC地址表频繁震荡</li>
+<li>占用设备CPU、带宽，全网卡顿</li>
+</ul>
+</li>
+<li>STP 默认<strong>交换机出厂自动开启</strong>；关闭命令：<code>stp disable</code></li>
+<li>STP 属于<strong>组播协议</strong>，不是广播；组播MAC：<code>01-80-C2-00-00-00</code></li>
+</ol>
+<h2 id="二、STP-两大核心作用"><a href="#二、STP-两大核心作用" class="headerlink" title="二、STP 两大核心作用"></a>二、STP 两大核心作用</h2><ol>
+<li><strong>消除环路</strong>：逻辑阻塞冗余端口，把环路修剪成树型无环拓扑</li>
+<li><strong>链路备份</strong>：主链路故障，自动放开阻塞端口，恢复通信</li>
+</ol>
+<h2 id="三、STP-工作四步流程"><a href="#三、STP-工作四步流程" class="headerlink" title="三、STP 工作四步流程"></a>三、STP 工作四步流程</h2><ol>
+<li>全网选举 <strong>根桥</strong></li>
+<li>所有<strong>非根桥</strong>选举 <strong>根端口 RP</strong></li>
+<li>每个网段选举 <strong>指定端口 DP</strong></li>
+<li>既不是RP也不是DP的端口，<strong>阻塞丢弃</strong></li>
+</ol>
+<blockquote>
+<p>根交换机上<strong>没有根端口</strong>，所有端口都是指定端口</p>
+</blockquote>
+<h2 id="四、BPDU-桥协议数据单元"><a href="#四、BPDU-桥协议数据单元" class="headerlink" title="四、BPDU 桥协议数据单元"></a>四、BPDU 桥协议数据单元</h2><ol>
+<li>STP 靠发送 <strong>BPDU</strong> 报文进行选举、收敛、维护拓扑</li>
+<li>两种 BPDU：<ul>
+<li><strong>配置BPDU</strong>：选举根桥、端口角色、维持拓扑，根桥<strong>每2秒</strong>发一次</li>
+<li><strong>TCN 拓扑变更BPDU</strong>：链路故障时向上通知根桥，触发全网MAC表刷新</li>
+</ul>
+</li>
+<li>BPDU 关键字段：<br>根桥ID、根路径开销RPC、桥ID、端口ID、计时器</li>
+</ol>
+<h2 id="五、核心标识：BID-桥ID-PID-端口ID"><a href="#五、核心标识：BID-桥ID-PID-端口ID" class="headerlink" title="五、核心标识：BID 桥ID &amp; PID 端口ID"></a>五、核心标识：BID 桥ID &amp; PID 端口ID</h2><h3 id="1-BID-桥ID（整台交换机标识）"><a href="#1-BID-桥ID（整台交换机标识）" class="headerlink" title="1. BID 桥ID（整台交换机标识）"></a>1. BID 桥ID（整台交换机标识）</h3><ul>
+<li>组成：<strong>2字节优先级 + 6字节MAC地址</strong></li>
+<li>优先级范围：0～65535，<strong>默认32768</strong></li>
+<li>规则：只能是 <strong>4096的倍数</strong></li>
+<li>选举：<strong>越小越优先</strong> → 先比优先级，相同再比MAC</li>
+</ul>
+<h3 id="2-PID-端口ID"><a href="#2-PID-端口ID" class="headerlink" title="2. PID 端口ID"></a>2. PID 端口ID</h3><ul>
+<li>组成：<strong>高8位端口优先级 + 低8位端口编号</strong></li>
+<li>端口优先级默认128，范围0～255</li>
+</ul>
+<h2 id="六、路径开销-Path-Cost"><a href="#六、路径开销-Path-Cost" class="headerlink" title="六、路径开销 Path Cost"></a>六、路径开销 Path Cost</h2><ol>
+<li>带宽越高，路径开销<strong>越小</strong>，越优先</li>
+<li>根路径开销RPC：到达根桥<strong>沿途所有入端口开销累加</strong></li>
+<li>选路原则：<strong>开销越低越优先</strong></li>
+</ol>
+<h2 id="七、三大角色选举规则"><a href="#七、三大角色选举规则" class="headerlink" title="七、三大角色选举规则"></a>七、三大角色选举规则</h2><h3 id="1-根桥选举"><a href="#1-根桥选举" class="headerlink" title="1. 根桥选举"></a>1. 根桥选举</h3><p>所有交换机初始都认为自己是根桥，比较 <strong>BID</strong>，最小者成为根桥。</p>
+<h3 id="2-根端口-RP（非根桥上唯一最优端口）"><a href="#2-根端口-RP（非根桥上唯一最优端口）" class="headerlink" title="2. 根端口 RP（非根桥上唯一最优端口）"></a>2. 根端口 RP（非根桥上唯一最优端口）</h3><p>依次比较：</p>
+<ol>
+<li>根路径开销 <strong>RPC 最小</strong></li>
+<li>对端 BID 最小</li>
+<li>对端 PID 最小</li>
+<li>本端 PID 最小</li>
+</ol>
+<h3 id="3-指定端口-DP（每个网段选一个）"><a href="#3-指定端口-DP（每个网段选一个）" class="headerlink" title="3. 指定端口 DP（每个网段选一个）"></a>3. 指定端口 DP（每个网段选一个）</h3><p>为每个网段选出唯一转发端口，负责转发该网段BPDU和数据；<br>规则同样：RPC → BID → PID；<strong>根桥所有端口都是DP</strong>。</p>
+<h3 id="4-阻塞端口"><a href="#4-阻塞端口" class="headerlink" title="4. 阻塞端口"></a>4. 阻塞端口</h3><p>既不是RP也不是DP，直接被阻塞，不转发用户数据，只监听BPDU。</p>
+<p>查看命令：<code>display stp brief</code></p>
+<h2 id="八、STP-端口状态（802-1D）"><a href="#八、STP-端口状态（802-1D）" class="headerlink" title="八、STP 端口状态（802.1D）"></a>八、STP 端口状态（802.1D）</h2><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>收BPDU</th>
+<th>发数据</th>
+<th>学习MAC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Disabled</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Blocking</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Listening</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>Learning</td>
+<td>√</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>Forwarding</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<ul>
+<li>稳定状态：Blocking、Forwarding</li>
+<li>过渡状态：Listening、Learning</li>
+</ul>
+<h3 id="与-RSTP-对应"><a href="#与-RSTP-对应" class="headerlink" title="与 RSTP 对应"></a>与 RSTP 对应</h3><p>STP 五种状态 → RSTP 简化为三种：<br><strong>Discarding、Learning、Forwarding</strong></p>
+<h2 id="九、STP-三大计时器"><a href="#九、STP-三大计时器" class="headerlink" title="九、STP 三大计时器"></a>九、STP 三大计时器</h2><ol>
+<li><strong>Hello Time</strong>：2秒，根桥发送BPDU周期</li>
+<li><strong>Forward Delay</strong>：15秒，监听、学习状态停留时间</li>
+<li><strong>Max Age</strong>：20秒，超时收不到BPDU认为链路故障</li>
+</ol>
+<p>整网收敛时间约 <strong>50秒</strong></p>
+<h2 id="十、STP-拓扑变更机制"><a href="#十、STP-拓扑变更机制" class="headerlink" title="十、STP 拓扑变更机制"></a>十、STP 拓扑变更机制</h2><ol>
+<li>链路故障，交换机发 <strong>TCN 报文</strong> 向上传至根桥</li>
+<li>根桥下发 TC 标记，全网<strong>缩短MAC地址老化时间</strong>，快速刷新表项</li>
+<li>否则要等MAC默认老化300秒，业务长时间不通</li>
+</ol>
+<h2 id="十一、STP-常用配置命令"><a href="#十一、STP-常用配置命令" class="headerlink" title="十一、STP 常用配置命令"></a>十一、STP 常用配置命令</h2><ol>
+<li>配置生成树模式</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp mode stp / rstp / mstp</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改交换机优先级（4096倍数）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp priority 4096</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>直接指定根桥&#x2F;备根桥</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stp root primary</span><br><span class="line">stp root secondary</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>修改路径开销标准</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp pathcost-standard dot1d-1998 / dot1t / legacy</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>关闭STP</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp disable</span><br></pre></td></tr></table></figure>
+
+<h2 id="十二、易错必记考点"><a href="#十二、易错必记考点" class="headerlink" title="十二、易错必记考点"></a>十二、易错必记考点</h2><ol>
+<li>STP 选路<strong>越小越优先</strong>；OSPF DR&#x2F;BDR 是<strong>越大越优先</strong></li>
+<li>优先级必须是 4096 倍数：0、4096、8192……</li>
+<li>根桥无根端口，非根桥有且只有一个根端口</li>
+<li>阻塞端口只收BPDU，不转发业务数据</li>
+<li>拓扑变化靠TCN报文刷新MAC表，不然业务长时间断流</li>
+<li>链路带宽越大，路径开销越小，越容易被选成转发端口</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1738,171 +1952,6 @@
 </tbody></table>
 <hr>
 <h2 id="四、结语"><a href="#四、结语" class="headerlink" title="四、结语"></a>四、结语</h2><p>传输层是互联网稳定通信的基石。弄懂端口号作用、TCP 序号确认、标志位、可靠传输机制，不仅能应付考试预习，也能看懂抓包分析、理解网页加载、即时通讯为什么稳定不丢消息。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/13/ip%E5%9C%B0%E5%9D%80%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/13/ip%E5%9C%B0%E5%9D%80%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">ip地址基础</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-13 21:29:58 / 修改时间：22:48:49" itemprop="dateCreated datePublished" datetime="2026-05-13T21:29:58+08:00">2026-05-13</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、什么是-IP-地址"><a href="#一、什么是-IP-地址" class="headerlink" title="一、什么是 IP 地址"></a>一、什么是 IP 地址</h2><p>IP 全称 IP Address，是网络里每一台通信设备的唯一身份标识。</p>
-<p>IPv4 采用 <strong>32 位二进制</strong> 组成，日常用点分十进制表示<br>示例：<code>192.168.1.1/24</code></p>
-<p>IP 地址固定分成两部分：</p>
-<ul>
-<li><strong>网络位</strong>：代表属于哪一个网段</li>
-<li><strong>主机位</strong>：代表网段里的某一台具体设备</li>
-</ul>
-<p>网络位和主机位的分界线，由子网掩码决定。</p>
-<p><strong>二进制换算举例：</strong><br><code>192.168.5.1</code> 二进制：<br><code>11000000.10101000.00000101.01111011</code><br>十进制计算：<code>128+64=192</code>，就是这么换算来的。</p>
-<hr>
-<h2 id="二、子网掩码核心知识点"><a href="#二、子网掩码核心知识点" class="headerlink" title="二、子网掩码核心知识点"></a>二、子网掩码核心知识点</h2><p>子网掩码英文：Subnet Mask</p>
-<h3 id="1-作用"><a href="#1-作用" class="headerlink" title="1. 作用"></a>1. 作用</h3><p>区分 IP 地址里哪部分是网络位、哪部分是主机位。</p>
-<h3 id="2-编码规则"><a href="#2-编码规则" class="headerlink" title="2. 编码规则"></a>2. 编码规则</h3><p>二进制里：</p>
-<ul>
-<li><code>1</code> &#x3D; 网络位</li>
-<li><code>0</code> &#x3D; 主机位<br>且 <code>1</code> 和 <code>0</code> <strong>必须连续</strong>，不能打乱穿插。</li>
-</ul>
-<h3 id="3-有效主机数量计算公式"><a href="#3-有效主机数量计算公式" class="headerlink" title="3. 有效主机数量计算公式"></a>3. 有效主机数量计算公式</h3><p>可用主机地址数 &#x3D; 2^{主机位数} - 2</p>
-<blockquote>
-<p>为什么要减 2？<br>要扣除<strong>网络地址</strong>和<strong>广播地址</strong>，这两个地址不能分给电脑、手机等终端使用。</p>
-</blockquote>
-<hr>
-<h2 id="三、IP-地址-A-B-C-类分类详解"><a href="#三、IP-地址-A-B-C-类分类详解" class="headerlink" title="三、IP 地址 A&#x2F;B&#x2F;C 类分类详解"></a>三、IP 地址 A&#x2F;B&#x2F;C 类分类详解</h2><h3 id="1-地址范围划分"><a href="#1-地址范围划分" class="headerlink" title="1. 地址范围划分"></a>1. 地址范围划分</h3><ul>
-<li><strong>A 类地址</strong>：首段 1～127</li>
-<li><strong>B 类地址</strong>：首段 128～191</li>
-<li><strong>C 类地址</strong>：首段 192～223</li>
-</ul>
-<h3 id="2-默认掩码与网段数量"><a href="#2-默认掩码与网段数量" class="headerlink" title="2. 默认掩码与网段数量"></a>2. 默认掩码与网段数量</h3><ul>
-<li><strong>A 类</strong>：默认大网段，整体一个大网络</li>
-<li><strong>B 类</strong>：默认掩码 &#x2F;16，包含 16 个标准网段</li>
-<li><strong>C 类</strong>：默认掩码 &#x2F;24，网段范围 xx.xx.0 ~ xx.xx.255，一共 256 个网段</li>
-</ul>
-<h3 id="3-特殊地址：127-环回地址"><a href="#3-特殊地址：127-环回地址" class="headerlink" title="3. 特殊地址：127 环回地址"></a>3. 特殊地址：127 环回地址</h3><ul>
-<li><code>127.x.x.x</code> 属于环回虚拟接口</li>
-<li>没有网卡也能 ping 通</li>
-<li>用途：专门测试本地 TCP&#x2F;IP 协议栈是否正常工作</li>
-</ul>
-<h3 id="4-私网-公网-IPv6"><a href="#4-私网-公网-IPv6" class="headerlink" title="4. 私网 &amp; 公网 &amp; IPv6"></a>4. 私网 &amp; 公网 &amp; IPv6</h3><ul>
-<li>家里、公司内网用的都是<strong>私网地址</strong></li>
-<li>访问互联网时，私网地址会转换成<strong>公网地址</strong>上网</li>
-<li>IPv6 升级为 128 位，彻底解决 IP 地址不够用问题</li>
-</ul>
-<hr>
-<h2 id="四、为什么要做子网划分"><a href="#四、为什么要做子网划分" class="headerlink" title="四、为什么要做子网划分"></a>四、为什么要做子网划分</h2><p>传统 A&#x2F;B&#x2F;C 类大网段有很大弊端：</p>
-<ul>
-<li>IP 地址资源严重浪费</li>
-<li>一个广播域设备太多</li>
-<li>广播报文泛滥，占用大量带宽</li>
-</ul>
-<p>所以引入<strong>子网划分</strong>：向主机位借位，把一个大网段拆成多个小网段，分给不同部门使用。</p>
-<hr>
-<h2 id="五、子网划分核心原理"><a href="#五、子网划分核心原理" class="headerlink" title="五、子网划分核心原理"></a>五、子网划分核心原理</h2><ul>
-<li>从原本的主机位借出若干位，当做新的<strong>子网网络位</strong></li>
-<li>借 <code>n</code> 位：可划分出子网数量 &#x3D; 2^{n}</li>
-<li>剩余 <code>m</code> 位主机位：每个子网可用主机数 &#x3D; 2^{m} - 2</li>
-</ul>
-<hr>
-<h2 id="六、经典子网划分实战案例"><a href="#六、经典子网划分实战案例" class="headerlink" title="六、经典子网划分实战案例"></a>六、经典子网划分实战案例</h2><h3 id="案例-1：C-类地址借-2-位划分"><a href="#案例-1：C-类地址借-2-位划分" class="headerlink" title="案例 1：C 类地址借 2 位划分"></a>案例 1：C 类地址借 2 位划分</h3><p>网段 <code>192.168.1.0/24</code>，借 2 位划分子网</p>
-<ul>
-<li>子网个数：2^{2} &#x3D; 4 个</li>
-<li>剩余主机位 6 位</li>
-<li>每个子网有效主机：2^{6} - 2 &#x3D; 62 个</li>
-</ul>
-<h3 id="案例-2：-28-子网划分实操"><a href="#案例-2：-28-子网划分实操" class="headerlink" title="案例 2：&#x2F;28 子网划分实操"></a>案例 2：&#x2F;28 子网划分实操</h3><p>网段 <code>61.179.150.0</code>，掩码 &#x2F;28</p>
-<ul>
-<li>网络位 28 位，剩余主机位 4 位</li>
-<li>块大小：2^{4} &#x3D; 16</li>
-<li>就近取 16 倍数：32</li>
-<li><strong>网络地址</strong>：<code>61.179.150.32/28</code></li>
-<li><strong>广播地址</strong>：<code>61.179.150.47</code></li>
-<li><strong>有效主机范围</strong>：33 ~ 46</li>
-</ul>
-<h3 id="案例-3：-26-网段地址范围"><a href="#案例-3：-26-网段地址范围" class="headerlink" title="案例 3：&#x2F;26 网段地址范围"></a>案例 3：&#x2F;26 网段地址范围</h3><ul>
-<li><code>142.68.1.64/26</code> → 可用主机：65～126</li>
-<li><code>142.168.102.128/26</code> → 可用主机：129～190</li>
-<li><code>192.168.102.192/26</code> → 可用主机：193～254</li>
-</ul>
-<blockquote>
-<p>记住规则：子网第一个地址是网络地址，最后一个是广播地址，都不能分配给终端。</p>
-</blockquote>
-<h3 id="案例-4：大网段-11-划分"><a href="#案例-4：大网段-11-划分" class="headerlink" title="案例 4：大网段 &#x2F;11 划分"></a>案例 4：大网段 &#x2F;11 划分</h3><p>网段 <code>60.160.0.0/11</code></p>
-<ul>
-<li>第二段原有 8 位网络位，借出 3 位，剩 5 位</li>
-<li>块大小：2^{5} &#x3D; 32</li>
-<li><strong>网络地址</strong>：<code>60.160.0.0</code></li>
-<li>下一个网段起始：160 + 32 &#x3D; 192</li>
-<li>本网段广播地址：<code>60.160.191.255</code></li>
-</ul>
-<hr>
-<h2 id="七、必背核心总结"><a href="#七、必背核心总结" class="headerlink" title="七、必背核心总结"></a>七、必背核心总结</h2><ol>
-<li>IPv4 32 位二进制，分网络位 + 主机位，子网掩码 <code>1</code> 看网络、<code>0</code> 看主机；</li>
-<li>算主机地址一定要 <strong>减 2</strong>，剔除网络和广播地址；</li>
-<li>A&#x2F;B&#x2F;C 类默认掩码固定，大网段浪费严重，必须做子网划分；</li>
-<li><strong>子网划分口诀</strong>：借位划子网 → 算块大小 → 找网络地址 → 定广播范围；</li>
-<li><code>127</code> 环回地址测本地协议栈，内网用私网，上网转公网。</li>
-</ol>
 
       
     </div>
