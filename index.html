@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,174 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/09/12/buuctf-pingpingping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/09/12/buuctf-pingpingping/" class="post-title-link" itemprop="url">buuctf-pingpingping</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-09-12 12:58:20 / 修改时间：13:09:21" itemprop="dateCreated datePublished" datetime="2026-09-12T12:58:20+08:00">2026-09-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>get传参，可以用命令执行的方式拿到flag，这里ttl为42，所以是linux系统</p>
+<p><img src="/images/buuctf-pingpingping/1789189160109.png" alt="1789189160109"></p>
+<p>由于这里对字符和空格进行了转义，所以构造url为</p>
+<p><code>?ip=127.0.0.1;b=ag.php;a=fl;tac$IF$9$a$b</code></p>
+<p>拿到flag</p>
+<p><img src="/images/buuctf-pingpingping/QQ_1789189747114.png" alt="img"> </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/09/12/buuctf-lovesql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/09/12/buuctf-lovesql/" class="post-title-link" itemprop="url">buuctf-lovesql</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-09-12 12:09:18 / 修改时间：12:55:56" itemprop="dateCreated datePublished" datetime="2026-09-12T12:09:18+08:00">2026-09-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>先试试万能密码</p>
+<p><code>admin&#39; or 1=&#39;1</code></p>
+<p><img src="/images/buuctf-lovesql/QQ_1789186315341.png" alt="img"> </p>
+<p>登陆后发现</p>
+<p><img src="/images/buuctf-lovesql/QQ_1789186340387.png" alt="img"> </p>
+<p>复制这个密码重新登陆试试</p>
+<p>ce08ab85f66d931b83c8f132ae73d425 </p>
+<p>好像并没有用</p>
+<p><img src="/images/buuctf-lovesql/QQ_1789186406465.png" alt="img"> </p>
+<p>那这题考察的就不是万能密码了</p>
+<p>观察url发现是get传参</p>
+<p><img src="/images/buuctf-lovesql/QQ_1789186535972.png" alt="img"> </p>
+<p>我们重新构造url</p>
+<p><img src="/images/buuctf-lovesql/QQ_1789187788785.png" alt="img"> </p>
+<p>发现回显结果告诉我们打破了原有的语句，说明这个闭合方式是单引号闭合</p>
+<p>接下来我们让传递的usermname进行报错，以此来爆列数</p>
+<p>构造url为</p>
+<p><code>?username=admin%27%20order%20by%203%20%23&amp;password=x</code></p>
+<p>为了防止浏览器过滤，使用url编码的方式</p>
+<p><img src="/images/buuctf-lovesql/QQ_1789188194450.png" alt="img"> </p>
+<p>发现order by 4页面出现报错</p>
+<p><img src="/images/buuctf-lovesql/QQ_1789188270518.png" alt="img"> </p>
+<p>因此回显点有4个</p>
+<p>然后利用回显点挨个爆数据库和表名吧</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1417,304 +1585,6 @@
 
 <h3 id="3-被认证方配置"><a href="#3-被认证方配置" class="headerlink" title="3. 被认证方配置"></a>3. 被认证方配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># PAP</span><br><span class="line">ppp pap local-user 用户名 password cipher 密码</span><br><span class="line"></span><br><span class="line"># CHAP</span><br><span class="line">ppp chap user 用户名</span><br><span class="line">ppp chap password cipher 密码</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/nat%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/15/nat%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">nat地址转换</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-15 16:39:04 / 修改时间：16:40:10" itemprop="dateCreated datePublished" datetime="2026-05-15T16:39:04+08:00">2026-05-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="NAT-网络地址转换-完整版知识点总结"><a href="#NAT-网络地址转换-完整版知识点总结" class="headerlink" title="NAT 网络地址转换 完整版知识点总结"></a>NAT 网络地址转换 完整版知识点总结</h1><h2 id="一、NAT-基础概念"><a href="#一、NAT-基础概念" class="headerlink" title="一、NAT 基础概念"></a>一、NAT 基础概念</h2><ol>
-<li><strong>全称</strong>：Network Address Translation 网络地址转换</li>
-<li>产生背景：解决 <strong>IPv4 公网地址枯竭</strong> 问题，作为 IPv6 普及前过渡技术。</li>
-<li>核心作用：<strong>私网地址 ↔ 公网地址 转换</strong><ul>
-<li>私网地址不能在公网路由，必须经过 NAT 转换才能上网</li>
-<li>多台内网主机可<strong>共用一个公网IP</strong>，节省公网地址</li>
-</ul>
-</li>
-<li>部署位置：<strong>内网和外网之间的网关路由器&#x2F;三层交换机</strong></li>
-</ol>
-<h3 id="公网地址-私网地址区别"><a href="#公网地址-私网地址区别" class="headerlink" title="公网地址 &amp; 私网地址区别"></a>公网地址 &amp; 私网地址区别</h3><ul>
-<li><strong>公网地址</strong>：ISP 分配、全球唯一、可直接上互联网、需要付费</li>
-<li><strong>私网地址</strong>：企业&#x2F;家庭内网自用、免费、可重复使用、<strong>不能公网路由</strong></li>
-<li>NAT 就是实现：私网访问公网必须转换成公网地址</li>
-</ul>
-<h2 id="二、NAT-四大核心类型"><a href="#二、NAT-四大核心类型" class="headerlink" title="二、NAT 四大核心类型"></a>二、NAT 四大核心类型</h2><h3 id="1-静态-NAT"><a href="#1-静态-NAT" class="headerlink" title="1. 静态 NAT"></a>1. 静态 NAT</h3><ul>
-<li><strong>一对一固定映射</strong>：一个私网IP永久绑定一个公网IP</li>
-<li>特点：<ul>
-<li>固定不变，适合外网主动访问内网服务器</li>
-<li><strong>无法节省公网地址</strong>，一对一占用</li>
-</ul>
-</li>
-<li>应用场景：内网服务器对外提供服务</li>
-<li>配置命令：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nat static enable</span><br><span class="line">nat static global 公网IP inside 私网IP</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="2-动态-NAT"><a href="#2-动态-NAT" class="headerlink" title="2. 动态 NAT"></a>2. 动态 NAT</h3><ul>
-<li>基于<strong>公网地址池</strong>，私网用户上网随机分配地址池里的公网IP</li>
-<li>特点：<ul>
-<li>用完释放，循环复用</li>
-<li>地址池耗尽时，新主机<strong>无法上网</strong></li>
-</ul>
-</li>
-<li>可加参数 <code>no-pat</code>：只换IP、<strong>不转换端口</strong></li>
-</ul>
-<h3 id="3-NAPT-端口地址转换（PAT）"><a href="#3-NAPT-端口地址转换（PAT）" class="headerlink" title="3. NAPT 端口地址转换（PAT）"></a>3. NAPT 端口地址转换（PAT）</h3><ul>
-<li><strong>多对一</strong>：多个私网IP共用<strong>同一个公网IP</strong>，靠<strong>不同端口</strong>区分</li>
-<li>原理：IP相同、端口不同，实现多主机同时上网</li>
-<li>企业、家庭最常用，极大节省公网地址</li>
-</ul>
-<h3 id="4-Easy-IP"><a href="#4-Easy-IP" class="headerlink" title="4. Easy IP"></a>4. Easy IP</h3><ul>
-<li>属于 NAPT 的简化版</li>
-<li>直接借用<strong>外网物理接口自身的公网IP</strong>，不用创建地址池</li>
-<li>适用：家庭、小型办公、拨号动态获取公网IP场景</li>
-<li>配置：接口下直接绑定 ACL 即可</li>
-</ul>
-<h2 id="三、NAT-Server-服务器映射（端口映射）"><a href="#三、NAT-Server-服务器映射（端口映射）" class="headerlink" title="三、NAT Server 服务器映射（端口映射）"></a>三、NAT Server 服务器映射（端口映射）</h2><ol>
-<li>作用：让<strong>外网主动访问内网服务器</strong></li>
-<li>原理：把「公网IP+端口」映射到「私网服务器IP+端口」</li>
-<li>也叫<strong>端口映射</strong></li>
-<li>配置命令：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nat server protocol tcp global 公网IP 公网端口 inside 私网IP 私网端口</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>特点：外网只能看到公网地址，<strong>隐藏内网真实私网地址</strong>，起到安全屏蔽作用</li>
-</ol>
-<h2 id="四、各类-NAT-对比"><a href="#四、各类-NAT-对比" class="headerlink" title="四、各类 NAT 对比"></a>四、各类 NAT 对比</h2><ol>
-<li><strong>静态NAT</strong>：一对一、固定映射、适合服务器发布</li>
-<li><strong>动态NAT</strong>：地址池随机分配、无端口转换、地址池满就断网</li>
-<li><strong>NAPT</strong>：多对一、端口区分、最省公网地址</li>
-<li><strong>Easy IP</strong>：借用接口IP、无需地址池、适合小型网络</li>
-<li><strong>NAT Server</strong>：端口映射，外网访问内网专用</li>
-</ol>
-<h2 id="五、常用配置命令"><a href="#五、常用配置命令" class="headerlink" title="五、常用配置命令"></a>五、常用配置命令</h2><ol>
-<li>查看静态NAT：<code>display nat static</code></li>
-<li>查看地址池：<code>display nat address-group</code></li>
-<li>查看出站NAT：<code>display nat outbound</code></li>
-<li>查看NAT服务器映射：<code>display nat server</code></li>
-</ol>
-<h2 id="六、核心原理与必记考点"><a href="#六、核心原理与必记考点" class="headerlink" title="六、核心原理与必记考点"></a>六、核心原理与必记考点</h2><ol>
-<li>没有 NAT：内网可以主动发往外网，但外网<strong>无法回包</strong>，路由找不到内网主机</li>
-<li>NAT 天然<strong>隐藏内网拓扑和私网地址</strong>，有基础安全防护</li>
-<li>动态NAT：地址池地址用完，新主机只能等释放后才能上网</li>
-<li>NAPT vs Easy IP<ul>
-<li>NAPT：需要配置<strong>公网地址池</strong></li>
-<li>Easy IP：不用地址池，直接用<strong>外网接口IP</strong></li>
-</ul>
-</li>
-<li>所有源NAT都在<strong>外网出接口</strong>配置</li>
-<li>静态NAT、NAT Server 支持外网主动访问内网；普通NAPT&#x2F;Easy IP 默认外网无法主动访问内网</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/acl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/15/acl/" class="post-title-link" itemprop="url">acl</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-15 16:36:51 / 修改时间：16:38:43" itemprop="dateCreated datePublished" datetime="2026-05-15T16:36:51+08:00">2026-05-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、ACL-基础概念"><a href="#一、ACL-基础概念" class="headerlink" title="一、ACL 基础概念"></a>一、ACL 基础概念</h2><p>ACL 全称：<strong>Access Control List 访问控制列表</strong></p>
-<ol>
-<li>作用：定义规则对数据包分类、<strong>允许&#x2F;拒绝</strong>流量通过</li>
-<li>用途：控制网络访问、限制流量、提升网络性能、防御网络攻击</li>
-<li>定位：属于<strong>包过滤基础防火墙技术</strong>，是早期第一代防火墙机制</li>
-<li>原理：由多条规则组成，按顺序逐条匹配，匹配即执行动作</li>
-</ol>
-<h2 id="二、ACL-工作机制"><a href="#二、ACL-工作机制" class="headerlink" title="二、ACL 工作机制"></a>二、ACL 工作机制</h2><ol>
-<li>每条规则包含：<strong>编号、时间段、匹配条件、执行动作</strong></li>
-<li>动作只有两种：<code>permit</code> 允许、<code>deny</code> 拒绝</li>
-<li>规则编号：默认步长 <strong>5</strong>（5、10、15…），方便中间插入规则</li>
-<li>匹配顺序：<strong>从上到下依次匹配</strong>，匹配到就立即执行，不再往下匹配</li>
-<li>所有规则都不匹配 → <strong>默认拒绝丢弃</strong></li>
-</ol>
-<h2 id="三、ACL-三大类型及编号范围"><a href="#三、ACL-三大类型及编号范围" class="headerlink" title="三、ACL 三大类型及编号范围"></a>三、ACL 三大类型及编号范围</h2><table>
-<thead>
-<tr>
-<th>类型</th>
-<th>编号区间</th>
-<th>匹配内容</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>基本ACL</td>
-<td>2000–2999</td>
-<td>仅<strong>源IP地址</strong></td>
-<td>只看从哪里来，所有协议都管控</td>
-</tr>
-<tr>
-<td>高级ACL</td>
-<td>3000–3999</td>
-<td>源IP、目的IP、协议、源端口、目的端口</td>
-<td>看从哪来、到哪去、什么业务</td>
-</tr>
-<tr>
-<td>二层ACL</td>
-<td>4000–4999</td>
-<td>源MAC、目的MAC、帧类型</td>
-<td>基于二层帧过滤</td>
-</tr>
-</tbody></table>
-<p>补充：ACL 还分<strong>数字型ACL、命名型ACL</strong>两种格式。</p>
-<h2 id="四、反掩码-通配符-核心区别"><a href="#四、反掩码-通配符-核心区别" class="headerlink" title="四、反掩码 &#x2F; 通配符 核心区别"></a>四、反掩码 &#x2F; 通配符 核心区别</h2><ol>
-<li><strong>子网掩码</strong>：连续1和0，1&#x3D;网络位、0&#x3D;主机位</li>
-<li><strong>路由反掩码</strong>：连续0和1</li>
-<li><strong>ACL通配符</strong>：可以任意0、1组合<ul>
-<li><strong>0 必须严格匹配</strong></li>
-<li><strong>1 忽略不匹配</strong></li>
-</ul>
-</li>
-</ol>
-<p>常用示例：</p>
-<ul>
-<li><code>192.168.0.1 0.0.0.0</code> 精确匹配单台主机</li>
-<li><code>192.168.0.0 0.0.0.255</code> 匹配整个网段</li>
-<li><code>any</code> 等价 <code>255.255.255.255</code> 匹配所有地址</li>
-<li>可精准匹配奇数&#x2F;偶数网段地址</li>
-</ul>
-<h2 id="五、基础配置命令"><a href="#五、基础配置命令" class="headerlink" title="五、基础配置命令"></a>五、基础配置命令</h2><h3 id="1-基本-ACL-配置"><a href="#1-基本-ACL-配置" class="headerlink" title="1. 基本 ACL 配置"></a>1. 基本 ACL 配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">acl number 2000</span><br><span class="line">rule 5 deny source 192.168.1.0 0.0.0.255</span><br></pre></td></tr></table></figure>
-<p>只根据<strong>源IP</strong>过滤所有流量。</p>
-<h3 id="2-高级-ACL-配置"><a href="#2-高级-ACL-配置" class="headerlink" title="2. 高级 ACL 配置"></a>2. 高级 ACL 配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">acl number 3000</span><br><span class="line">rule 5 deny tcp source 192.168.1.0 0.0.0.255 </span><br><span class="line">destination 8.8.8.8 0.0.0.0 destination-port eq 80</span><br></pre></td></tr></table></figure>
-<p>可精准控制：<strong>源IP+目的IP+协议+目的端口</strong></p>
-<h3 id="3-接口调用-ACL"><a href="#3-接口调用-ACL" class="headerlink" title="3. 接口调用 ACL"></a>3. 接口调用 ACL</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">traffic-filter inbound acl 2000   # 入方向过滤</span><br><span class="line">traffic-filter outbound acl 3000  # 出方向过滤</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-查看与验证"><a href="#4-查看与验证" class="headerlink" title="4. 查看与验证"></a>4. 查看与验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">display acl 2000</span><br><span class="line">display traffic-filter applied-record</span><br></pre></td></tr></table></figure>
-
-<h2 id="六、ACL-匹配逻辑重点"><a href="#六、ACL-匹配逻辑重点" class="headerlink" title="六、ACL 匹配逻辑重点"></a>六、ACL 匹配逻辑重点</h2><ol>
-<li>规则按序号从小到大<strong>依次匹配</strong></li>
-<li>一旦匹配成功，立刻执行 permit&#x2F;deny，不再继续匹配</li>
-<li>所有规则都不匹配 → <strong>默认丢弃</strong></li>
-<li>基本ACL只能匹配<strong>源地址</strong>，不区分协议和端口</li>
-<li>高级ACL可精细管控：源、目的、协议、端口、应用</li>
-</ol>
-<h2 id="七、ACL-应用价值"><a href="#七、ACL-应用价值" class="headerlink" title="七、ACL 应用价值"></a>七、ACL 应用价值</h2><ul>
-<li>限制非法主机上网，防止内网冲突</li>
-<li>禁止特定网段访问服务器（如禁止访问FTP、HTTP）</li>
-<li>减少无效流量，节省带宽消耗</li>
-<li>基础安全防护，隔离恶意访问流量</li>
-</ul>
 
       
     </div>
